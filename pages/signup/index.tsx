@@ -1,4 +1,4 @@
-import { Input, StyledHeader, StyledLabel, SubmitButton } from '../../styles/globalstyles';
+import { Input, StyledHeader, StyledLabel, StyledPage, SubmitButton } from '../../styles/globalstyles';
 import Navbar from '../../components/Navbar';
 import { FormEvent } from 'react';
 import { useInputsAndValidation } from '../../hooks/useInputsAndValidation';
@@ -35,7 +35,7 @@ const Signup = (props: any) => {
   };
 
   return (
-    <>
+    <StyledPage>
       <Navbar handleLogout={props.handleLogout}></Navbar>
       <StyledHeader>Sign up</StyledHeader>
       <form onSubmit={handleSubmit} className='form_type_onboarding'>
@@ -56,7 +56,7 @@ const Signup = (props: any) => {
           Register
         </SubmitButton>
       </form>
-    </>
+    </StyledPage>
   );
 };
 
