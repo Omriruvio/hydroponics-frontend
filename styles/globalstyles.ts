@@ -37,6 +37,13 @@ export const StyledHeader = styled.h1`
   margin: 3rem 0;
   text-align: center;
   font-size: 2.2rem;
+
+  @media (min-width: 750px) {
+    font-size: 3rem;
+  }
+  @media (min-width: 1000px) {
+    font-size: 3.5rem;
+  }
 `;
 
 export const SubmitButton = styled.button<{ isValid: boolean }>`
