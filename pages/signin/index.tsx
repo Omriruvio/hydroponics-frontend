@@ -1,7 +1,7 @@
 import { FormEvent } from 'react';
 import Navbar from '../../components/Navbar';
 import { useInputsAndValidation } from '../../hooks/useInputsAndValidation';
-import { Input, StyledHeader, StyledLabel, SubmitButton } from '../../styles/globalstyles';
+import { Input, StyledHeader, StyledLabel, StyledPage, SubmitButton } from '../../styles/globalstyles';
 import { login as requestLogin } from '../../utils/auth';
 import { useRouter } from 'next/router';
 
@@ -30,7 +30,7 @@ const Signin = (props: any) => {
       .catch((err) => console.log(err));
   };
   return (
-    <>
+    <StyledPage>
       <Navbar handleLogout={props.handleLogout}></Navbar>
       <StyledHeader>Log in</StyledHeader>
       <form onSubmit={handleSubmit} className='form_type_onboarding'>
@@ -46,7 +46,7 @@ const Signin = (props: any) => {
           Log in
         </SubmitButton>
       </form>
-    </>
+    </StyledPage>
   );
 };
 

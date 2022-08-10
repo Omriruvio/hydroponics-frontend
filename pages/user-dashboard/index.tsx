@@ -3,7 +3,7 @@ import UserChart from '../../components/UserChart';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { StyledHeader } from '../../styles/globalstyles';
+import { StyledHeader, StyledPage } from '../../styles/globalstyles';
 import { getCropData } from '../../utils/cropData';
 import { parseCropData } from '../../utils/parseCropData';
 import Image from 'next/image';
@@ -84,7 +84,7 @@ const UserDashboard = () => {
   }, [router, currentUser, chartRange]);
   return (
     currentUser.isLoggedIn && (
-      <>
+      <StyledPage>
         <Navbar></Navbar>
         <StyledHeader>User Dashboard</StyledHeader>
         <ChartRangePicker handleChartRangeChange={handleChartRangeChange} chartRange={chartRange}></ChartRangePicker>
@@ -98,7 +98,7 @@ const UserDashboard = () => {
             </li>
           ))}
         </StyledUl>
-      </>
+      </StyledPage>
     )
   );
 };

@@ -63,8 +63,13 @@ interface ChartProps {
   daysDisplayed: number;
 }
 
-const StyledLine = styled(Line)`
+const ChartContainer = styled.div`
   padding: 0 2rem;
+  margin: auto;
+
+  @media (min-width: 760px) {
+    max-width: 75%;
+  }
 `;
 
 const DisplayDays = styled.p`
@@ -77,7 +82,9 @@ const UserChart: FunctionComponent<ChartProps> = ({ chartData, daysDisplayed }) 
   return (
     <>
       <DisplayDays>Displaying last {daysDisplayed} days of data:</DisplayDays>
-      <StyledLine options={options} data={chartData}></StyledLine>
+      <ChartContainer>
+        <Line options={options} data={chartData}></Line>
+      </ChartContainer>
     </>
   );
 };

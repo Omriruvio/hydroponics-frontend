@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import Navbar from '../components/Navbar';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import { useContext, useEffect } from 'react';
-import { StyledHeader } from '../styles/globalstyles';
+import { StyledHeader, StyledPage } from '../styles/globalstyles';
 
 export default function Home(props) {
   const currentUser = useContext(CurrentUserContext);
@@ -19,14 +19,14 @@ export default function Home(props) {
 
   return (
     currentUser.isLoggedIn && (
-      <>
+      <StyledPage>
         <Head>
           <title>Hydroponics Dashboard</title>
         </Head>
         <Navbar />
         <StyledHeader>Welcome to Hydroponics!</StyledHeader>
         {/* <UserChart title="General chart"></UserChart> */}
-      </>
+      </StyledPage>
     )
   );
 }

@@ -14,6 +14,11 @@ export const GlobalStyles = createGlobalStyle`
   }
 `;
 
+export const StyledPage = styled.div`
+  margin: auto;
+  max-width: 1280px;
+`;
+
 export const StyledLabel = styled.label`
   display: flex;
   flex-direction: column;
