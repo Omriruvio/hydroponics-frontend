@@ -3,10 +3,13 @@ import Link from 'next/link';
 import styled from 'styled-components';
 
 const LogoWrapper = styled.div`
-  width: 200px;
+  width: 120px;
 
-  @media (max-width: 600px) {
-    width: 120px;
+  @media (min-width: 750px) {
+    width: 200px;
+  }
+  @media (min-width: 1000px) {
+    width: 300px;
   }
 `;
 

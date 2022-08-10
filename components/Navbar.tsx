@@ -21,6 +21,13 @@ const HeaderWrapper = styled.div`
 const StyledLinkLabel = styled.a<{ isActive: boolean }>`
   border-bottom: ${({ isActive }) => isActive && '1px solid rgb(106, 184, 139)'};
   font-size: 1.2rem;
+
+  @media (min-width: 750px) {
+    font-size: 2rem;
+  }
+  @media (min-width: 1000px) {
+    font-size: 2.5rem;
+  }
 `;
 
 const Navbar = (props: any) => {
