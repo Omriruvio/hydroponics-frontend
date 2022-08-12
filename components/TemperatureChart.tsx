@@ -3,6 +3,7 @@ import { XAxis, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 're
 import { GridChartContainer } from '../styles/globalstyles';
 import { NORMAL_DATA_RANGE_METRIC } from '../utils/constants';
 import { getColorRange, GradientBreakpoint } from '../utils/getColorRange';
+import { CustomTooltip } from './CustomTooltip';
 import { ChartProps } from './UserChart';
 
 const TemperatureChart: FunctionComponent<ChartProps> = ({ chartData }) => {
@@ -24,26 +25,24 @@ const TemperatureChart: FunctionComponent<ChartProps> = ({ chartData }) => {
   }, [chartData]);
 
   return (
-    <>
-      <GridChartContainer>
-        <ResponsiveContainer width='100%' height='100%'>
-          <AreaChart width={750} height={300} data={chartData}>
-            <XAxis dataKey='name' />
-            <Tooltip />
-            <Legend verticalAlign='top' height={50} iconSize={16} wrapperStyle={{ fontSize: '1rem' }} />
-            <defs>
-              <linearGradient id='temp-chart-fill' x1='0' y1='0' x2='0' y2='1'>
-                <stop offset={gradientBreakpoints.top} stopColor='red' stopOpacity={0.5} />
-                <stop offset={gradientBreakpoints.topNormal} stopColor='green' stopOpacity={0.3} />
-                <stop offset={gradientBreakpoints.bottomNormal} stopColor='green' stopOpacity={0.3} />
-                <stop offset={gradientBreakpoints.bottom} stopColor='blue' stopOpacity={0.1} />
-              </linearGradient>
-            </defs>
-            <Area type='monotone' dataKey='temperature' stroke='rgb(195, 79, 104)' fill='url(#temp-chart-fill)' />
-          </AreaChart>
-        </ResponsiveContainer>
-      </GridChartContainer>
-    </>
+    <GridChartContainer>
+      <ResponsiveContainer width='100%' height='100%'>
+        <AreaChart width={750} height={300} data={chartData}>
+          <XAxis dataKey='name' />
+          <Tooltip content={<CustomTooltip />} />
+          <Legend verticalAlign='top' height={50} iconSize={16} wrapperStyle={{ fontSize: '1rem' }} />
+          <defs>
+            <linearGradient id='temp-chart-fill' x1='0' y1='0' x2='0' y2='1'>
+              <stop offset={gradientBreakpoints.top} stopColor='red' stopOpacity={0.5} />
+              <stop offset={gradientBreakpoints.topNormal} stopColor='green' stopOpacity={0.3} />
+              <stop offset={gradientBreakpoints.bottomNormal} stopColor='green' stopOpacity={0.3} />
+              <stop offset={gradientBreakpoints.bottom} stopColor='blue' stopOpacity={0.1} />
+            </linearGradient>
+          </defs>
+          <Area type='monotone' dataKey='temperature' stroke='rgb(195, 79, 104)' fill='url(#temp-chart-fill)' />
+        </AreaChart>
+      </ResponsiveContainer>
+    </GridChartContainer>
   );
 };
 
