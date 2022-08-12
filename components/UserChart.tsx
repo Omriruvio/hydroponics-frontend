@@ -29,12 +29,6 @@ const DisplayDays = styled.p`
 `;
 
 const UserChart: FunctionComponent<ChartProps> = ({ chartData, daysDisplayed }) => {
-  const legendProps = {
-    verticalAlign: 'top',
-    height: '50px',
-    wrapperStyle: { fontSize: '2rem' },
-    iconSize: '3rem',
-  };
   return (
     <>
       <DisplayDays>Displaying last {daysDisplayed} days of data:</DisplayDays>
@@ -43,7 +37,7 @@ const UserChart: FunctionComponent<ChartProps> = ({ chartData, daysDisplayed }) 
           <LineChart width={750} height={300} data={chartData}>
             <XAxis dataKey='name' />
             <Tooltip />
-            <Legend {...legendProps} />
+            <Legend verticalAlign='top' height={50} iconSize={40} wrapperStyle={{ fontSize: '2rem' }} />
             <Line type='monotone' dataKey='ph' stroke='rgb(39, 68, 216)' activeDot={{ r: 6 }} />
             <Line type='monotone' dataKey='ec' stroke='rgb(234, 240, 67)' activeDot={{ r: 6 }} />
             <Line type='monotone' dataKey='humidity' stroke='rgb(233, 127, 22)' activeDot={{ r: 6 }} />
