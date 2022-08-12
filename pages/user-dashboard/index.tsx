@@ -9,6 +9,7 @@ import { parseCropData, RechartsTableData } from '../../utils/parseCropData';
 import Image from 'next/image';
 import styled from 'styled-components';
 import ChartRangePicker from '../../components/ChartRangePicker';
+import TemperatureChart from '../../components/TemperatureChart';
 
 interface ImageData {
   _id: string;
@@ -18,7 +19,7 @@ interface ImageData {
 
 const UserDashboard = () => {
   const [imageData, setImageData] = useState<ImageData[]>([]);
-  const [chartData, setChartData] = useState<RechartsTableData>([]);
+  const [mainChartData, setMainChartData] = useState<RechartsTableData>([]);
   const [chartRange, setChartRange] = useState(28);
   const currentUser = useContext(CurrentUserContext);
   const router = useRouter();
@@ -42,7 +43,7 @@ const UserDashboard = () => {
             return acc;
           }, []);
           setImageData(imageArray);
-          setChartData(parseCropData(data));
+          setMainChartData(parseCropData(data));
         }
       })
       .catch((err) => console.log(err));
@@ -53,7 +54,8 @@ const UserDashboard = () => {
         <Navbar></Navbar>
         <StyledHeader>User Dashboard</StyledHeader>
         <ChartRangePicker handleChartRangeChange={handleChartRangeChange} chartRange={chartRange}></ChartRangePicker>
-        <UserChart chartData={chartData} daysDisplayed={chartRange}></UserChart>
+        <UserChart chartData={mainChartData} daysDisplayed={chartRange}></UserChart>
+        <TemperatureChart chartData={mainChartData} daysDisplayed={chartRange}></TemperatureChart>
         <StyledHeader>Image Uploads</StyledHeader>
         <StyledUl>
           {imageData.map(({ _id, imageUrl, dateReceived }) => (

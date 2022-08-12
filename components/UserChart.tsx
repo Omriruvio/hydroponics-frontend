@@ -2,12 +2,12 @@ import { FunctionComponent } from 'react';
 import { LineChart, Line, XAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import styled from 'styled-components';
 import { RechartsTableData } from '../utils/parseCropData';
-interface ChartProps {
+export interface ChartProps {
   chartData: RechartsTableData;
   daysDisplayed: number;
 }
 
-const ChartContainer = styled.div`
+export const ChartContainer = styled.div`
   width: 100%;
   height: 250px;
   padding: 0 2rem;
@@ -22,7 +22,7 @@ const ChartContainer = styled.div`
   }
 `;
 
-const DisplayDays = styled.p`
+export const DisplayDays = styled.p`
   text-align: center;
   font-size: 1.2rem;
   color: rgb(70, 70, 70);
