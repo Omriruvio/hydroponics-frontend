@@ -1,5 +1,5 @@
 import { FunctionComponent, useEffect, useState } from 'react';
-import { XAxis, Tooltip, Legend, ResponsiveContainer, AreaChart, Area, YAxis } from 'recharts';
+import { XAxis, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { NORMAL_DATA_RANGE_METRIC } from '../utils/constants';
 import { getColorRange, GradientBreakpoint } from '../utils/getColorRange';
 import { ChartContainer, ChartProps, DisplayDays } from './UserChart';
