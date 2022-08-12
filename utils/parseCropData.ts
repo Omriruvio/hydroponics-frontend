@@ -10,30 +10,21 @@ export interface UserMessage {
   imageUrl?: string | null;
 }
 
-export interface ParsedTableData {
-  labels: string[];
-  temperatures: string[];
-  humidities: string[];
-  phs: string[];
-  ecs: string[];
-}
+export type RechartsTableData = Array<{ name: string; ph: number; ec: number; temperature: number; humidity: number }>;
 
-export const parseCropData = (messageHistory: UserMessage[]): ParsedTableData => {
-  const data = messageHistory.reduce(
-    (data: ParsedTableData, message) => {
-      const { humidity, ph, ec, temperature } = message;
-      // formats date variable to 'DD/MM'
-      const date = new Date(message.dateReceived).toLocaleString().split(',')[0].slice(0, -5);
-      if ([humidity, ph, ec, temperature].some((field) => Boolean(field))) {
-        data.labels.push(date);
-        data.temperatures.push(temperature || '0');
-        data.ecs.push(ec || '0');
-        data.phs.push(ph || '0');
-        data.humidities.push(humidity || '0');
-      }
-      return data;
-    },
-    { labels: [], temperatures: [], humidities: [], phs: [], ecs: [] }
-  );
+export const parseCropData = (messageHistory: UserMessage[]): RechartsTableData => {
+  const data = messageHistory.reduce<RechartsTableData>((data, message) => {
+    const date = new Date(message.dateReceived).toLocaleString().split(',')[0].slice(0, -5);
+    const { humidity, ph, ec, temperature } = message;
+    if ([humidity, ph, ec, temperature].some((field) => Boolean(field)))
+      data.push({
+        name: date,
+        ph: Number(message.ph) || 0,
+        ec: Number(message.ec) || 0,
+        humidity: Number(message.humidity) || 0,
+        temperature: Number(message.temperature) || 0,
+      });
+    return data;
+  }, []);
   return data;
 };

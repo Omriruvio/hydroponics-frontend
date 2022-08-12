@@ -1,74 +1,24 @@
-import { Line } from 'react-chartjs-2';
-import { options } from '../utils/chartSettings';
-import styled from 'styled-components';
-import {
-  Chart as ChartJS,
-  ArcElement,
-  LineElement,
-  BarElement,
-  PointElement,
-  BarController,
-  BubbleController,
-  DoughnutController,
-  LineController,
-  PieController,
-  PolarAreaController,
-  RadarController,
-  ScatterController,
-  CategoryScale,
-  LinearScale,
-  LogarithmicScale,
-  RadialLinearScale,
-  TimeScale,
-  TimeSeriesScale,
-  Decimation,
-  Filler,
-  Legend,
-  Title,
-  Tooltip,
-  SubTitle,
-  ChartData,
-} from 'chart.js';
 import { FunctionComponent } from 'react';
-
-ChartJS.register(
-  ArcElement,
-  LineElement,
-  BarElement,
-  PointElement,
-  BarController,
-  BubbleController,
-  DoughnutController,
-  LineController,
-  PieController,
-  PolarAreaController,
-  RadarController,
-  ScatterController,
-  CategoryScale,
-  LinearScale,
-  LogarithmicScale,
-  RadialLinearScale,
-  TimeScale,
-  TimeSeriesScale,
-  Decimation,
-  Filler,
-  Legend,
-  Title,
-  Tooltip,
-  SubTitle
-);
-
+import { LineChart, Line, XAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import styled from 'styled-components';
+import { RechartsTableData } from '../utils/parseCropData';
 interface ChartProps {
-  chartData: ChartData<'line'>;
+  chartData: RechartsTableData;
   daysDisplayed: number;
 }
 
 const ChartContainer = styled.div`
+  width: 100%;
+  height: 250px;
   padding: 0 2rem;
   margin: auto;
 
   @media (min-width: 760px) {
-    max-width: 75%;
+    height: 450px;
+  }
+
+  @media (min-width: 1000px) {
+    height: 600px;
   }
 `;
 
@@ -79,11 +29,27 @@ const DisplayDays = styled.p`
 `;
 
 const UserChart: FunctionComponent<ChartProps> = ({ chartData, daysDisplayed }) => {
+  const legendProps = {
+    verticalAlign: 'top',
+    height: '50px',
+    wrapperStyle: { fontSize: '2rem' },
+    iconSize: '3rem',
+  };
   return (
     <>
       <DisplayDays>Displaying last {daysDisplayed} days of data:</DisplayDays>
       <ChartContainer>
-        <Line options={options} data={chartData}></Line>
+        <ResponsiveContainer width='100%' height='100%'>
+          <LineChart width={750} height={300} data={chartData}>
+            <XAxis dataKey='name' />
+            <Tooltip />
+            <Legend {...legendProps} />
+            <Line type='monotone' dataKey='ph' stroke='rgb(39, 68, 216)' activeDot={{ r: 6 }} />
+            <Line type='monotone' dataKey='ec' stroke='rgb(234, 240, 67)' activeDot={{ r: 6 }} />
+            <Line type='monotone' dataKey='humidity' stroke='rgb(233, 127, 22)' activeDot={{ r: 6 }} />
+            <Line type='monotone' dataKey='temperature' stroke='rgb(195, 79, 104)' activeDot={{ r: 6 }} />
+          </LineChart>
+        </ResponsiveContainer>
       </ChartContainer>
     </>
   );

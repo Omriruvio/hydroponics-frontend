@@ -5,11 +5,9 @@ import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { StyledHeader, StyledPage } from '../../styles/globalstyles';
 import { getCropData } from '../../utils/cropData';
-import { parseCropData } from '../../utils/parseCropData';
+import { parseCropData, RechartsTableData } from '../../utils/parseCropData';
 import Image from 'next/image';
 import styled from 'styled-components';
-import { initialData } from '../../utils/chartSettings';
-import { ChartData } from 'chart.js';
 import ChartRangePicker from '../../components/ChartRangePicker';
 
 interface ImageData {
@@ -20,7 +18,7 @@ interface ImageData {
 
 const UserDashboard = () => {
   const [imageData, setImageData] = useState<ImageData[]>([]);
-  const [chartData, setChartData] = useState<ChartData<'line'>>(initialData);
+  const [chartData, setChartData] = useState<RechartsTableData>([]);
   const [chartRange, setChartRange] = useState(28);
   const currentUser = useContext(CurrentUserContext);
   const router = useRouter();
@@ -44,40 +42,7 @@ const UserDashboard = () => {
             return acc;
           }, []);
           setImageData(imageArray);
-          const { labels, temperatures, humidities, phs, ecs } = parseCropData(data);
-          setChartData({
-            labels,
-            datasets: [
-              {
-                label: 'Temperature',
-                data: temperatures,
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                yAxisID: 'y',
-              },
-              {
-                label: 'Humidity',
-                data: humidities,
-                borderColor: 'rgb(233, 127, 22)',
-                backgroundColor: 'rgba(233, 127, 22, 0.5)',
-                yAxisID: 'y',
-              },
-              {
-                label: 'PH',
-                data: phs,
-                borderColor: 'rgb(39, 68, 216)',
-                backgroundColor: 'rgba(39, 68, 216, 0.5)',
-                yAxisID: 'y',
-              },
-              {
-                label: 'EC',
-                data: ecs,
-                borderColor: 'rgb(234, 240, 67)',
-                backgroundColor: 'rgba(234, 240, 67, 0.5)',
-                yAxisID: 'y',
-              },
-            ],
-          });
+          setChartData(parseCropData(data));
         }
       })
       .catch((err) => console.log(err));
