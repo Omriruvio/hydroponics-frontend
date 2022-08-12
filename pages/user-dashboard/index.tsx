@@ -10,6 +10,9 @@ import Image from 'next/image';
 import styled from 'styled-components';
 import ChartRangePicker from '../../components/ChartRangePicker';
 import TemperatureChart from '../../components/TemperatureChart';
+import PhChart from '../../components/PhChart';
+import EcChart from '../../components/EcChart';
+import HumidityChart from '../../components/HumidityChart';
 
 interface ImageData {
   _id: string;
@@ -56,6 +59,9 @@ const UserDashboard = () => {
         <ChartRangePicker handleChartRangeChange={handleChartRangeChange} chartRange={chartRange}></ChartRangePicker>
         <UserChart chartData={mainChartData} daysDisplayed={chartRange}></UserChart>
         <TemperatureChart chartData={mainChartData} daysDisplayed={chartRange}></TemperatureChart>
+        <PhChart chartData={mainChartData} daysDisplayed={chartRange} />
+        <EcChart chartData={mainChartData} daysDisplayed={chartRange} />
+        <HumidityChart chartData={mainChartData} daysDisplayed={chartRange} />
         <StyledHeader>Image Uploads</StyledHeader>
         <StyledUl>
           {imageData.map(({ _id, imageUrl, dateReceived }) => (
