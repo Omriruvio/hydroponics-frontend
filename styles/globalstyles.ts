@@ -14,9 +14,36 @@ export const GlobalStyles = createGlobalStyle`
   }
 `;
 
+export const GridChartContainer = styled.li`
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 200px;
+
+  & .recharts-default-legend {
+    font-size: 1.2rem;
+
+    @media (min-width: 760px) {
+      font-size: 1.5rem;
+    }
+
+    @media (min-width: 1000px) {
+      font-size: 1.7rem;
+    }
+  }
+
+  @media (min-width: 760px) {
+    height: 270px;
+  }
+
+  @media (min-width: 1000px) {
+    height: 330px;
+  }
+`;
+
 export const StyledPage = styled.div`
   margin: auto;
-  max-width: 1280px;
+  max-width: 1440px;
   padding: 0 2rem;
 `;
 

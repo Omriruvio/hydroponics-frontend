@@ -1,10 +1,11 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import { XAxis, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 'recharts';
+import { GridChartContainer } from '../styles/globalstyles';
 import { NORMAL_DATA_RANGE_METRIC } from '../utils/constants';
 import { getColorRange, GradientBreakpoint } from '../utils/getColorRange';
-import { ChartContainer, ChartProps, DisplayDays } from './UserChart';
+import { ChartProps } from './UserChart';
 
-const TemperatureChart: FunctionComponent<ChartProps> = ({ chartData, daysDisplayed }) => {
+const TemperatureChart: FunctionComponent<ChartProps> = ({ chartData }) => {
   const [gradientBreakpoints, setGradientBreakpoints] = useState<GradientBreakpoint>({
     top: '0%',
     topNormal: '40%',
@@ -24,13 +25,12 @@ const TemperatureChart: FunctionComponent<ChartProps> = ({ chartData, daysDispla
 
   return (
     <>
-      <DisplayDays>Displaying last {daysDisplayed} days of temperature data:</DisplayDays>
-      <ChartContainer>
+      <GridChartContainer>
         <ResponsiveContainer width='100%' height='100%'>
           <AreaChart width={750} height={300} data={chartData}>
             <XAxis dataKey='name' />
             <Tooltip />
-            <Legend verticalAlign='top' height={50} iconSize={40} wrapperStyle={{ fontSize: '2rem' }} />
+            <Legend verticalAlign='top' height={50} iconSize={16} wrapperStyle={{ fontSize: '1rem' }} />
             <defs>
               <linearGradient id='temp-chart-fill' x1='0' y1='0' x2='0' y2='1'>
                 <stop offset={gradientBreakpoints.top} stopColor='red' stopOpacity={0.5} />
@@ -42,7 +42,7 @@ const TemperatureChart: FunctionComponent<ChartProps> = ({ chartData, daysDispla
             <Area type='monotone' dataKey='temperature' stroke='rgb(195, 79, 104)' fill='url(#temp-chart-fill)' />
           </AreaChart>
         </ResponsiveContainer>
-      </ChartContainer>
+      </GridChartContainer>
     </>
   );
 };

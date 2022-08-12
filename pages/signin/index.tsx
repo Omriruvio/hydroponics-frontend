@@ -25,7 +25,7 @@ const Signin = (props: any) => {
         // set JWT in cookies
         props.handleLogin({ email, phoneNumber });
         resetForm();
-        router.push('/');
+        router.push('/user-dashboard');
       })
       .catch((err) => console.log(err));
   };

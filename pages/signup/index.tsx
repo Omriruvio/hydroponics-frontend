@@ -25,7 +25,7 @@ const Signup = (props: any) => {
       phoneNumber: phoneNumber,
     })
       .then((user) => {
-        router.push('/');
+        router.push('/signin');
         // set state to logged in
         // TODO: add success message
         props.handleRegister(user);

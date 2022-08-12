@@ -1,10 +1,11 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import { XAxis, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 'recharts';
+import { GridChartContainer } from '../styles/globalstyles';
 import { NORMAL_DATA_RANGE_METRIC } from '../utils/constants';
 import { getColorRange, GradientBreakpoint } from '../utils/getColorRange';
-import { ChartContainer, ChartProps, DisplayDays } from './UserChart';
+import { ChartProps } from './UserChart';
 
-const PhChart: FunctionComponent<ChartProps> = ({ chartData, daysDisplayed }) => {
+const PhChart: FunctionComponent<ChartProps> = ({ chartData }) => {
   const [gradientBreakpoints, setGradientBreakpoints] = useState<GradientBreakpoint>({
     top: '0%',
     topNormal: '40%',
@@ -24,13 +25,12 @@ const PhChart: FunctionComponent<ChartProps> = ({ chartData, daysDisplayed }) =>
 
   return (
     <>
-      <DisplayDays>Displaying last {daysDisplayed} days of PH data:</DisplayDays>
-      <ChartContainer>
+      <GridChartContainer>
         <ResponsiveContainer width='100%' height='100%'>
           <AreaChart width={750} height={300} data={chartData}>
             <XAxis dataKey='name' />
             <Tooltip />
-            <Legend verticalAlign='top' height={50} iconSize={40} wrapperStyle={{ fontSize: '2rem' }} />
+            <Legend verticalAlign='top' height={50} iconSize={16} wrapperStyle={{ fontSize: '1rem' }} />
             <defs>
               <linearGradient id='ph-chart-fill' x1='0' y1='0' x2='0' y2='1'>
                 <stop offset={gradientBreakpoints.top} stopColor='red' stopOpacity={0.5} />
@@ -42,7 +42,7 @@ const PhChart: FunctionComponent<ChartProps> = ({ chartData, daysDisplayed }) =>
             <Area type='monotone' dataKey='ph' stroke='rgb(39, 68, 216)' fill='url(#ph-chart-fill)' />
           </AreaChart>
         </ResponsiveContainer>
-      </ChartContainer>
+      </GridChartContainer>
     </>
   );
 };
