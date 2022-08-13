@@ -1,11 +1,10 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import { XAxis, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 'recharts';
-import { GridChartContainer } from '../styles/globalstyles';
-import { NORMAL_DATA_RANGE_METRIC } from '../utils/constants';
-import { getColorRange, GradientBreakpoint } from '../utils/getColorRange';
-import { CustomDot } from './CustomDot';
-import { CustomTooltip } from './CustomTooltip';
-import { ChartProps } from './UserChart';
+import { GridChartContainer } from '../../styles/globalstyles';
+import { NORMAL_DATA_RANGE_METRIC } from '../../utils/constants';
+import { getColorRange, GradientBreakpoint } from '../../utils/getColorRange';
+import { CustomTooltip } from './../CustomTooltip';
+import { ChartProps } from './../UserChart';
 
 const HumidityChart: FunctionComponent<ChartProps> = ({ chartData }) => {
   const [gradientBreakpoints, setGradientBreakpoints] = useState<GradientBreakpoint>({
@@ -40,13 +39,7 @@ const HumidityChart: FunctionComponent<ChartProps> = ({ chartData }) => {
               <stop offset={gradientBreakpoints.bottom} stopColor='red' stopOpacity={0.1} />
             </linearGradient>
           </defs>
-          <Area
-            dot={<CustomDot dataType='humidity' size={40} offsetX={-10} offsetY={-10} />}
-            type='monotone'
-            dataKey='humidity'
-            stroke='rgb(233, 127, 22)'
-            fill='url(#humidity-chart-fill)'
-          />
+          <Area type='monotone' dataKey='humidity' stroke='rgb(233, 127, 22)' fill='url(#humidity-chart-fill)' />
         </AreaChart>
       </ResponsiveContainer>
     </GridChartContainer>

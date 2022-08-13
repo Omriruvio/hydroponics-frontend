@@ -6,7 +6,7 @@ export interface UserAuth {
   isAdmin: boolean;
 }
 
-interface IUserContext {
+export interface IUserContext {
   email: string;
   phoneNumber: string;
   isLoggedIn: boolean;

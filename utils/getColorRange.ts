@@ -1,6 +1,6 @@
 import { RechartsTableData } from './parseCropData';
-type HydroponicsDataType = 'temperature' | 'ph' | 'ec' | 'humidity';
-type GetColorRangeProps = { tableData: RechartsTableData; dataField: HydroponicsDataType; normalMin: number; normalMax: number };
+export type HydroponicsDataType = 'temperature' | 'ph' | 'ec' | 'humidity';
+export type GetColorRangeProps = { tableData: RechartsTableData; dataField: HydroponicsDataType; normalMin: number; normalMax: number };
 export type GradientBreakpoint = { top: string; topNormal: string; bottomNormal: string; bottom: string };
 
 /**

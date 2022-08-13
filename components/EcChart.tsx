@@ -3,6 +3,7 @@ import { XAxis, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 're
 import { GridChartContainer } from '../styles/globalstyles';
 import { NORMAL_DATA_RANGE_METRIC } from '../utils/constants';
 import { getColorRange, GradientBreakpoint } from '../utils/getColorRange';
+import { CustomDot } from './CustomDot';
 import { CustomTooltip } from './CustomTooltip';
 import { ChartProps } from './UserChart';
 
@@ -39,7 +40,13 @@ const EcChart: FunctionComponent<ChartProps> = ({ chartData }) => {
               <stop offset={gradientBreakpoints.bottom} stopColor='red' stopOpacity={0.1} />
             </linearGradient>
           </defs>
-          <Area type='monotone' dataKey='ec' stroke='rgb(234, 240, 67)' fill='url(#ec-chart-fill)' />
+          <Area
+            dot={<CustomDot dataType='ec' size={40} offsetX={-10} offsetY={-10} />}
+            type='monotone'
+            dataKey='ec'
+            stroke='rgb(234, 240, 67)'
+            fill='url(#ec-chart-fill)'
+          />
         </AreaChart>
       </ResponsiveContainer>
     </GridChartContainer>

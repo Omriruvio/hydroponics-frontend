@@ -3,6 +3,7 @@ import { XAxis, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 're
 import { GridChartContainer } from '../styles/globalstyles';
 import { NORMAL_DATA_RANGE_METRIC } from '../utils/constants';
 import { getColorRange, GradientBreakpoint } from '../utils/getColorRange';
+import { CustomDot } from './CustomDot';
 import { CustomTooltip } from './CustomTooltip';
 import { ChartProps } from './UserChart';
 
@@ -39,7 +40,13 @@ const TemperatureChart: FunctionComponent<ChartProps> = ({ chartData }) => {
               <stop offset={gradientBreakpoints.bottom} stopColor='blue' stopOpacity={0.1} />
             </linearGradient>
           </defs>
-          <Area type='monotone' dataKey='temperature' stroke='rgb(195, 79, 104)' fill='url(#temp-chart-fill)' />
+          <Area
+            dot={<CustomDot dataType='temperature' size={40} offsetX={-10} offsetY={-10} />}
+            type='monotone'
+            dataKey='temperature'
+            stroke='rgb(195, 79, 104)'
+            fill='url(#temp-chart-fill)'
+          />
         </AreaChart>
       </ResponsiveContainer>
     </GridChartContainer>

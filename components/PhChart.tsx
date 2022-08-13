@@ -3,6 +3,7 @@ import { XAxis, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 're
 import { GridChartContainer } from '../styles/globalstyles';
 import { NORMAL_DATA_RANGE_METRIC } from '../utils/constants';
 import { getColorRange, GradientBreakpoint } from '../utils/getColorRange';
+import { CustomDot } from './CustomDot';
 import { CustomTooltip } from './CustomTooltip';
 import { ChartProps } from './UserChart';
 
@@ -39,7 +40,13 @@ const PhChart: FunctionComponent<ChartProps> = ({ chartData }) => {
               <stop offset={gradientBreakpoints.bottom} stopColor='red' stopOpacity={0.1} />
             </linearGradient>
           </defs>
-          <Area type='monotone' dataKey='ph' stroke='rgb(39, 68, 216)' fill='url(#ph-chart-fill)' />
+          <Area
+            dot={<CustomDot dataType='ph' size={40} offsetX={-10} offsetY={-10} />}
+            type='monotone'
+            dataKey='ph'
+            stroke='rgb(39, 68, 216)'
+            fill='url(#ph-chart-fill)'
+          />
         </AreaChart>
       </ResponsiveContainer>
     </GridChartContainer>
