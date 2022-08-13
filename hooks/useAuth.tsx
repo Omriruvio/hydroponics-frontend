@@ -1,12 +1,19 @@
 import { createContext, FunctionComponent, PropsWithChildren, useCallback, useContext, useState } from 'react';
 
+export interface UserAuth {
+  email: string;
+  phoneNumber: string;
+  isAdmin: boolean;
+}
+
 interface IUserContext {
   email: string;
   phoneNumber: string;
   isLoggedIn: boolean;
   isAdmin: boolean;
-  login: (user: { email: string; phoneNumber: string; isAdmin: boolean }) => void;
+  login: (user: UserAuth) => void;
   logout: () => void;
+  register: (user: UserAuth) => void;
 }
 
 const UserContext = createContext<IUserContext>({
@@ -16,6 +23,7 @@ const UserContext = createContext<IUserContext>({
   isAdmin: false,
   login: () => {},
   logout: () => {},
+  register: () => {},
 });
 UserContext.displayName = 'UserDataContext';
 
@@ -40,7 +48,7 @@ export const UserDataProvider: FunctionComponent<PropsWithChildren> = ({ childre
     setPhoneNumber('');
   };
 
-  // const handleRegister = () => { };
+  const register = () => {};
 
-  return <UserContext.Provider value={{ login, logout, isLoggedIn, phoneNumber, email, isAdmin }}>{children}</UserContext.Provider>;
+  return <UserContext.Provider value={{ register, login, logout, isLoggedIn, phoneNumber, email, isAdmin }}>{children}</UserContext.Provider>;
 };

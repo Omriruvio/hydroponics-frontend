@@ -2,8 +2,9 @@ import { Input, StyledHeader, StyledLabel, StyledPage, SubmitButton } from '../.
 import Navbar from '../../components/Navbar';
 import { FormEvent } from 'react';
 import { useInputsAndValidation } from '../../hooks/useInputsAndValidation';
-import { register as registerUser } from '../../utils/auth';
+import { register } from '../../utils/auth';
 import { useRouter } from 'next/router';
+import { useAuth } from '../../hooks/useAuth';
 
 interface RegisterInputs {
   email: string;
@@ -13,22 +14,22 @@ interface RegisterInputs {
 
 // TODO: Implement custom error messages
 
-const Signup = (props: any) => {
+const Signup = () => {
   const { handleChange, inputs, isValid, resetForm } = useInputsAndValidation();
+  const currentUser = useAuth();
   const router = useRouter();
   const registerInputs = inputs as RegisterInputs;
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     const { email, phoneNumber /* , confirm */ } = registerInputs;
-    registerUser({
+    register({
       email: email,
       phoneNumber: phoneNumber,
     })
-      .then((user) => {
-        router.push('/signin');
-        // set state to logged in
+      .then(() => {
         // TODO: add success message
-        props.handleRegister(user);
+        router.push('/signin');
+        currentUser.register({ email, phoneNumber, isAdmin: false });
         resetForm();
       })
       .catch((err) => console.log(err));
@@ -36,7 +37,7 @@ const Signup = (props: any) => {
 
   return (
     <StyledPage>
-      <Navbar handleLogout={props.handleLogout}></Navbar>
+      <Navbar />
       <StyledHeader>Sign up</StyledHeader>
       <form onSubmit={handleSubmit} className='form_type_onboarding'>
         <StyledLabel>
