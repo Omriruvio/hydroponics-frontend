@@ -2,6 +2,7 @@ import { FunctionComponent } from 'react';
 import { LineChart, Line, XAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import styled from 'styled-components';
 import { RechartsTableData } from '../utils/parseCropData';
+import { CustomDot } from './CustomDot';
 import { CustomTooltip } from './CustomTooltip';
 export interface ChartProps {
   chartData: RechartsTableData;
@@ -18,10 +19,34 @@ const UserChart: FunctionComponent<ChartProps> = ({ chartData, daysDisplayed }) 
             <XAxis dataKey='name' />
             <Tooltip content={<CustomTooltip />} />
             <Legend verticalAlign='top' height={50} iconSize={16} wrapperStyle={{ fontSize: '1rem' }} />
-            <Line type='monotone' dataKey='ph' stroke='rgb(39, 68, 216)' activeDot={{ r: 6 }} />
-            <Line type='monotone' dataKey='ec' stroke='rgb(234, 240, 67)' activeDot={{ r: 6 }} />
-            <Line type='monotone' dataKey='humidity' stroke='rgb(233, 127, 22)' activeDot={{ r: 6 }} />
-            <Line type='monotone' dataKey='temperature' stroke='rgb(195, 79, 104)' activeDot={{ r: 6 }} />
+            <Line
+              dot={<CustomDot dataType='ph' size={40} offsetX={-10} offsetY={-10} />}
+              type='monotone'
+              dataKey='ph'
+              stroke='rgb(39, 68, 216)'
+              activeDot={{ r: 2 }}
+            />
+            <Line
+              dot={<CustomDot dataType='ec' size={40} offsetX={-10} offsetY={-10} />}
+              type='monotone'
+              dataKey='ec'
+              stroke='rgb(234, 240, 67)'
+              activeDot={{ r: 2 }}
+            />
+            <Line
+              dot={<CustomDot dataType='humidity' size={40} offsetX={-10} offsetY={-10} />}
+              type='monotone'
+              dataKey='humidity'
+              stroke='rgb(233, 127, 22)'
+              activeDot={{ r: 2 }}
+            />
+            <Line
+              dot={<CustomDot dataType='temperature' size={40} offsetX={-10} offsetY={-10} />}
+              type='monotone'
+              dataKey='temperature'
+              stroke='rgb(195, 79, 104)'
+              activeDot={{ r: 2 }}
+            />
           </LineChart>
         </ResponsiveContainer>
       </MainChartContainer>

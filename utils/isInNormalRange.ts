@@ -15,7 +15,7 @@ const NORMAL_DATA_RANGE_METRIC = {
  */
 
 export const isInNormalRange = (value: number[], dataType: HydroponicsDataType): boolean => {
-  const compareValue = value[1];
+  const compareValue = value[1] || value;
   switch (dataType) {
     case 'temperature':
       const conditionTemp = NORMAL_DATA_RANGE_METRIC.TEMPERATURE.MAX >= compareValue && compareValue >= NORMAL_DATA_RANGE_METRIC.TEMPERATURE.MIN;
