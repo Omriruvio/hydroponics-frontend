@@ -29,7 +29,7 @@ const StyledLinkLabel = styled.a<{ isActive: boolean }>`
   }
 `;
 
-const Navbar = (props: any) => {
+const Navbar = () => {
   const { pathname } = useRouter();
   const currentUser = useAuth();
 
@@ -66,7 +66,7 @@ const Navbar = (props: any) => {
           {/* Log out link */}
           {currentUser.isLoggedIn && (
             <Link href='/signin' passHref>
-              <StyledLinkLabel onClick={(e) => props.handleLogout(e)} isActive={pathname === '/signin'}>
+              <StyledLinkLabel onClick={currentUser.logout} isActive={pathname === '/signin'}>
                 Logout
               </StyledLinkLabel>
             </Link>
