@@ -4,6 +4,7 @@ import { useInputsAndValidation } from '../../hooks/useInputsAndValidation';
 import { Input, StyledHeader, StyledLabel, StyledPage, SubmitButton } from '../../styles/globalstyles';
 import { login as requestLogin } from '../../utils/auth';
 import { useRouter } from 'next/router';
+import { useAuth } from '../../hooks/useAuth';
 
 interface LoginInputs {
   email: string;
@@ -12,7 +13,8 @@ interface LoginInputs {
 
 // TODO: Implement custom error messages
 
-const Signin = (props: any) => {
+const Signin = () => {
+  const currentUser = useAuth();
   const router = useRouter();
   const { handleChange, inputs, isValid, resetForm } = useInputsAndValidation();
   const loginInputs = inputs as LoginInputs;
@@ -23,7 +25,7 @@ const Signin = (props: any) => {
       .then(() => {
         // set user context logged in
         // set JWT in cookies
-        props.handleLogin({ email, phoneNumber });
+        currentUser.login({ email, phoneNumber, isAdmin: false });
         resetForm();
         router.push('/user-dashboard');
       })
@@ -31,7 +33,7 @@ const Signin = (props: any) => {
   };
   return (
     <StyledPage>
-      <Navbar handleLogout={props.handleLogout}></Navbar>
+      <Navbar></Navbar>
       <StyledHeader>Log in</StyledHeader>
       <form onSubmit={handleSubmit} className='form_type_onboarding'>
         <StyledLabel>

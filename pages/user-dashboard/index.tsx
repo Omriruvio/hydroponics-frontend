@@ -1,7 +1,6 @@
 import Navbar from '../../components/Navbar';
 import UserChart from '../../components/UserChart';
-import CurrentUserContext from '../../contexts/CurrentUserContext';
-import { ChangeEvent, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { StyledHeader, StyledPage } from '../../styles/globalstyles';
 import { getCropData } from '../../utils/cropData';
@@ -10,6 +9,7 @@ import Image from 'next/image';
 import styled from 'styled-components';
 import ChartRangePicker from '../../components/ChartRangePicker';
 import { DataBreakdown } from '../../components/DataBreakdown';
+import { useAuth } from '../../hooks/useAuth';
 
 interface ImageData {
   _id: string;
@@ -21,7 +21,7 @@ const UserDashboard = () => {
   const [imageData, setImageData] = useState<ImageData[]>([]);
   const [mainChartData, setMainChartData] = useState<RechartsTableData>([]);
   const [chartRange, setChartRange] = useState(28);
-  const currentUser = useContext(CurrentUserContext);
+  const currentUser = useAuth();
   const router = useRouter();
 
   const handleChartRangeChange = (e: ChangeEvent) => {
@@ -34,7 +34,7 @@ const UserDashboard = () => {
       router.replace('/signin');
       return;
     }
-    getCropData(chartRange, currentUser)
+    getCropData(chartRange, { email: currentUser.email, phoneNumber: currentUser.phoneNumber })
       .then((data) => {
         if (Array.isArray(data)) {
           const imageArray = data.reduce((acc, message) => {

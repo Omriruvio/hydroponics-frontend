@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router';
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import Navbar from '../../components/Navbar';
+import { useAuth } from '../../hooks/useAuth';
 // import UserChart from '../../components/UserChart';
-import CurrentUserContext from '../../contexts/CurrentUserContext';
 import { StyledHeader } from '../../styles/globalstyles';
 
 const AdminDashboard = () => {
-  const currentUser = useContext(CurrentUserContext);
+  const currentUser = useAuth();
   const router = useRouter();
 
   useEffect(() => {

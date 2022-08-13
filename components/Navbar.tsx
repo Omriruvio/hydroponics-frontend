@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 import Link from 'next/link';
 import { MainLogo } from './MainLogo';
-import { useContext } from 'react';
 import { useRouter } from 'next/router';
-import CurrentUserContext from '../contexts/CurrentUserContext';
+import { useAuth } from '../hooks/useAuth';
 
 const Nav = styled.div`
   display: flex;
@@ -32,7 +31,7 @@ const StyledLinkLabel = styled.a<{ isActive: boolean }>`
 
 const Navbar = (props: any) => {
   const { pathname } = useRouter();
-  const currentUser = useContext(CurrentUserContext);
+  const currentUser = useAuth();
 
   return (
     <>

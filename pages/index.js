@@ -1,16 +1,12 @@
 import Head from 'next/head';
-import Image from 'next/image';
-import Link from 'next/link';
-import UserChart from '../components/UserChart.tsx';
 import { useRouter } from 'next/router';
-import styled from 'styled-components';
 import Navbar from '../components/Navbar';
-import CurrentUserContext from '../contexts/CurrentUserContext';
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { StyledHeader, StyledPage } from '../styles/globalstyles';
+import { useAuth } from '../hooks/useAuth';
 
 export default function Home(props) {
-  const currentUser = useContext(CurrentUserContext);
+  const currentUser = useAuth();
   const router = useRouter();
 
   useEffect(() => {
