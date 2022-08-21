@@ -9,10 +9,10 @@ export interface ChartProps {
   daysDisplayed: number;
 }
 
-const UserChart: FunctionComponent<ChartProps> = ({ chartData, daysDisplayed }) => {
+const UserChart: FunctionComponent<ChartProps> = ({ chartData }) => {
   return (
     <>
-      <DisplayDays>Displaying last {daysDisplayed} days of data:</DisplayDays>
+      {/* <DisplayDays>Displaying last {daysDisplayed} days of data:</DisplayDays> */}
       <MainChartContainer>
         <ResponsiveContainer width='100%' height='100%'>
           <LineChart width={750} height={300} data={chartData}>

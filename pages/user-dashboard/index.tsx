@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import ChartRangePicker from '../../components/ChartRangePicker';
 import { DataBreakdown } from '../../components/DataBreakdown';
 import { useAuth } from '../../hooks/useAuth';
+import { DisplayDays } from '../../components/UserChart';
 
 interface ImageData {
   _id: string;
@@ -54,6 +55,7 @@ const UserDashboard = () => {
         <Navbar></Navbar>
         <StyledHeader>User Dashboard</StyledHeader>
         <ChartRangePicker handleChartRangeChange={handleChartRangeChange} chartRange={chartRange}></ChartRangePicker>
+        <DisplayDays>Displaying last {chartRange} days of data:</DisplayDays>
         {/* Combined chart currently commented out */}
         {/* <UserChart chartData={mainChartData} daysDisplayed={chartRange}></UserChart> */}
         <DataBreakdown chartData={mainChartData} daysDisplayed={chartRange} />
