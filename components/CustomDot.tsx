@@ -6,6 +6,7 @@ export const CustomDot: FunctionComponent<any> = ({ dotOpacity = 0.7, dataType, 
   // const { name, ph, ec, humidity, temperature }: IPayLoad = payload;
   const isNormal = isInNormalRange(value, dataType);
   if (isNormal) {
+    // green leaf
     return (
       <svg x={cx + offsetX} y={cy + offsetY} width={size} height={size} viewBox='0 0 1024 1024'>
         <path
@@ -21,6 +22,7 @@ export const CustomDot: FunctionComponent<any> = ({ dotOpacity = 0.7, dataType, 
       </svg>
     );
   } else {
+    // red leaf
     return (
       <svg x={cx + offsetX} y={cy + offsetY} width={size} height={size} viewBox='0 0 1024 1024'>
         <path

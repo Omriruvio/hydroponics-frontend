@@ -19,11 +19,9 @@ const RangePicker = styled.input`
 `;
 
 const ChartRangePicker: FunctionComponent<PickerProps> = ({ chartRange, handleChartRangeChange }) => {
-  return (
-    <>
-      <RangePicker type={'range'} min={7} max={28} step={7} value={chartRange} onChange={(e) => handleChartRangeChange(e)}></RangePicker>
-    </>
-  );
+  const handleChange = (e: any) => handleChartRangeChange(e);
+
+  return <RangePicker type={'range'} min={7} max={28} step={7} value={chartRange} onChange={handleChange}></RangePicker>;
 };
 
 export default ChartRangePicker;

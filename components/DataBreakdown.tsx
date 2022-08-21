@@ -1,21 +1,41 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { HydroponicsDataType } from '../utils/getColorRange';
 import { RechartsTableData } from '../utils/parseCropData';
 import EcChart from './EcChart';
-import HumidityChart from './HumidityChart';
+// import HumidityChart from './HumidityChart';
 import PhChart from './PhChart';
 import TemperatureChart from './TemperatureChart';
+
+const splitChartData = (data: RechartsTableData) => {
+  const newData: any = { temperature: [], humidity: [], ph: [], ec: [] };
+  for (const field of Object.keys(newData)) {
+    const dataType = field as HydroponicsDataType;
+    for (const message of data) {
+      if (message[dataType] > 0) {
+        newData[dataType].push({ name: message.name, [dataType]: message[dataType] });
+      }
+    }
+  }
+  return newData;
+};
 
 export const DataBreakdown: FunctionComponent<{
   chartData: RechartsTableData;
   daysDisplayed: number;
 }> = ({ chartData, daysDisplayed }) => {
+  const [chartsData, setChartsData] = useState({ temperature: [], humidity: [], ph: [], ec: [] });
+  useEffect(() => {
+    setChartsData(splitChartData(chartData));
+  }, [chartData]);
+
   return (
     <DataBreakdownContainer>
-      <TemperatureChart chartData={chartData} daysDisplayed={daysDisplayed}></TemperatureChart>
-      <PhChart chartData={chartData} daysDisplayed={daysDisplayed} />
-      <EcChart chartData={chartData} daysDisplayed={daysDisplayed} />
-      <HumidityChart chartData={chartData} daysDisplayed={daysDisplayed} />
+      <TemperatureChart chartData={chartsData.temperature} daysDisplayed={daysDisplayed}></TemperatureChart>
+      <PhChart chartData={chartsData.ph} daysDisplayed={daysDisplayed} />
+      <EcChart chartData={chartsData.ec} daysDisplayed={daysDisplayed} />
+      {/* Humidity chart temporarily removed */}
+      {/* <HumidityChart chartData={chartsData.humidity} daysDisplayed={daysDisplayed} /> */}
     </DataBreakdownContainer>
   );
 };

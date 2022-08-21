@@ -1,5 +1,5 @@
 import Navbar from '../../components/Navbar';
-import UserChart from '../../components/UserChart';
+// import UserChart from '../../components/UserChart';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { StyledHeader, StyledPage } from '../../styles/globalstyles';
@@ -54,7 +54,8 @@ const UserDashboard = () => {
         <Navbar></Navbar>
         <StyledHeader>User Dashboard</StyledHeader>
         <ChartRangePicker handleChartRangeChange={handleChartRangeChange} chartRange={chartRange}></ChartRangePicker>
-        <UserChart chartData={mainChartData} daysDisplayed={chartRange}></UserChart>
+        {/* Combined chart currently commented out */}
+        {/* <UserChart chartData={mainChartData} daysDisplayed={chartRange}></UserChart> */}
         <DataBreakdown chartData={mainChartData} daysDisplayed={chartRange} />
         <StyledHeader>Image Uploads</StyledHeader>
         <StyledUl>
