@@ -1,60 +1,32 @@
 import Navbar from '../../components/Navbar';
-// import UserChart from '../../components/UserChart';
-import { ChangeEvent, useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import { StyledHeader, StyledPage } from '../../styles/globalstyles';
-import { getCropData } from '../../utils/cropData';
-import { parseCropData, RechartsTableData } from '../../utils/parseCropData';
 import Image from 'next/image';
 import styled from 'styled-components';
 import ChartRangePicker from '../../components/ChartRangePicker';
 import { DataBreakdown } from '../../components/DataBreakdown';
-import { useAuth } from '../../hooks/useAuth';
 import { DisplayDays } from '../../components/UserChart';
-
-interface ImageData {
-  _id: string;
-  imageUrl: string;
-  dateReceived: string;
-}
+import { useCropData } from '../../hooks/useCropData';
+import { useAuth } from '../../hooks/useAuth';
+import Router from 'next/router';
 
 const UserDashboard = () => {
-  const [imageData, setImageData] = useState<ImageData[]>([]);
-  const [mainChartData, setMainChartData] = useState<RechartsTableData>([]);
-  const [chartRange, setChartRange] = useState(28);
   const currentUser = useAuth();
-  const router = useRouter();
-
-  const handleChartRangeChange = (e: ChangeEvent) => {
-    const target = e.target as HTMLInputElement;
-    setChartRange(+target.value);
-  };
+  const { mainChartData, imageData, chartRange, handleRangeChange } = useCropData();
 
   useEffect(() => {
     if (!currentUser.isLoggedIn) {
-      router.replace('/signin');
+      Router.replace('/');
       return;
     }
-    getCropData(chartRange, { email: currentUser.email, phoneNumber: currentUser.phoneNumber })
-      .then((data) => {
-        if (Array.isArray(data)) {
-          const imageArray = data.reduce((acc, message) => {
-            const { imageUrl, dateReceived } = message;
-            if (imageUrl) acc.push({ imageUrl, dateReceived });
-            return acc;
-          }, []);
-          setImageData(imageArray);
-          setMainChartData(parseCropData(data));
-        }
-      })
-      .catch((err) => console.log(err));
-  }, [router, currentUser, chartRange]);
+  }, [currentUser]);
+
   return (
     currentUser.isLoggedIn && (
       <StyledPage>
         <Navbar></Navbar>
         <StyledHeader>User Dashboard</StyledHeader>
-        <ChartRangePicker handleChartRangeChange={handleChartRangeChange} chartRange={chartRange}></ChartRangePicker>
+        <ChartRangePicker handleChartRangeChange={handleRangeChange} chartRange={chartRange}></ChartRangePicker>
         <DisplayDays>Displaying last {chartRange} days of data:</DisplayDays>
         {/* Combined chart currently commented out */}
         {/* <UserChart chartData={mainChartData} daysDisplayed={chartRange}></UserChart> */}

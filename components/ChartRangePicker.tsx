@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'react';
 import styled from 'styled-components';
+import { MAX_CHART_DAYS, MIN_CHART_DAYS, RANGE_STEP_SIZE } from '../utils/constants';
 
 interface PickerProps {
   chartRange: number;
@@ -21,7 +22,16 @@ const RangePicker = styled.input`
 const ChartRangePicker: FunctionComponent<PickerProps> = ({ chartRange, handleChartRangeChange }) => {
   const handleChange = (e: any) => handleChartRangeChange(e);
 
-  return <RangePicker type={'range'} min={7} max={28} step={7} value={chartRange} onChange={handleChange}></RangePicker>;
+  return (
+    <RangePicker
+      type={'range'}
+      min={MIN_CHART_DAYS}
+      max={MAX_CHART_DAYS}
+      step={RANGE_STEP_SIZE}
+      value={chartRange}
+      onChange={handleChange}
+    ></RangePicker>
+  );
 };
 
 export default ChartRangePicker;

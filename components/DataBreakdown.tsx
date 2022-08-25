@@ -3,12 +3,16 @@ import styled from 'styled-components';
 import { HydroponicsDataType } from '../utils/getColorRange';
 import { RechartsTableData } from '../utils/parseCropData';
 import EcChart from './EcChart';
-// import HumidityChart from './HumidityChart';
 import PhChart from './PhChart';
 import TemperatureChart from './TemperatureChart';
 
+type SplitCropData = { [k in HydroponicsDataType]: number } | { name: string };
+type ISplitChartData = {
+  [key in HydroponicsDataType]: Array<SplitCropData>;
+};
+
 const splitChartData = (data: RechartsTableData) => {
-  const newData: any = { temperature: [], humidity: [], ph: [], ec: [] };
+  const newData: ISplitChartData = { temperature: [], humidity: [], ph: [], ec: [] };
   for (const field of Object.keys(newData)) {
     const dataType = field as HydroponicsDataType;
     for (const message of data) {
@@ -24,7 +28,7 @@ export const DataBreakdown: FunctionComponent<{
   chartData: RechartsTableData;
   daysDisplayed: number;
 }> = ({ chartData, daysDisplayed }) => {
-  const [chartsData, setChartsData] = useState({ temperature: [], humidity: [], ph: [], ec: [] });
+  const [chartsData, setChartsData] = useState<any>({ temperature: [], humidity: [], ph: [], ec: [] });
   useEffect(() => {
     setChartsData(splitChartData(chartData));
   }, [chartData]);

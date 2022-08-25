@@ -7,9 +7,8 @@ import { handleResponse, IUserAuth } from './auth';
  */
 
 export const getCropData = (days: number, user: IUserAuth) => {
-  return fetch(`${BASE_URL}/history/${days}`, {
+  return fetch(`${BASE_URL}/history/${user.phoneNumber}/${days}`, {
     headers: { 'Content-Type': 'application/json' },
-    method: 'POST',
-    body: JSON.stringify({ phoneNumber: user.phoneNumber }),
+    method: 'GET',
   }).then(handleResponse);
 };

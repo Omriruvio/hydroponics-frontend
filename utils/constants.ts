@@ -7,3 +7,7 @@ export const NORMAL_DATA_RANGE_METRIC = {
   HUMIDITY: { MIN: 45, MAX: 65 },
   PH: { MIN: 5, MAX: 6.5 },
 };
+
+export const MAX_CHART_DAYS = 28;
+export const MIN_CHART_DAYS = 7;
+export const RANGE_STEP_SIZE = 7;
