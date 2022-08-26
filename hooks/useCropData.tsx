@@ -1,6 +1,7 @@
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import debounce from 'lodash.debounce';
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { IUserAuth } from '../utils/auth';
-import { MAX_CHART_DAYS } from '../utils/constants';
+import { MAX_CHART_DAYS, RANGE_PICKER_DEBOUNCE_DELAY_MS } from '../config';
 import { getCropData } from '../utils/cropData';
 import { parseCropData, RechartsTableData } from '../utils/parseCropData';
 import { useAuth } from './useAuth';
@@ -27,25 +28,33 @@ export const useCropData = () => {
     } else return [];
   }, []);
 
-  const fetchCropData = useCallback(
-    (days: number, user: IUserAuth) => {
-      getCropData(days, user)
-        .then((data) => {
-          if (Array.isArray(data)) {
-            const imageArray = parseImages(data);
-            setImageData(imageArray);
-            setMainChartData(parseCropData(data));
-          }
-        })
-        .catch((err) => console.log(err));
+  const updateCharts = useCallback(
+    (data: unknown) => {
+      if (Array.isArray(data)) {
+        setImageData(parseImages(data));
+        setMainChartData(parseCropData(data));
+      }
     },
     [parseImages]
   );
 
+  const fetchCropData = useCallback(
+    (days: number, user: IUserAuth) => {
+      return getCropData(days, user)
+        .then(updateCharts)
+        .catch((err) => console.log(err));
+    },
+    [updateCharts]
+  );
+
+  const debounceFetchCropData = useMemo(() => {
+    return debounce(fetchCropData, RANGE_PICKER_DEBOUNCE_DELAY_MS);
+  }, [fetchCropData]);
+
   const handleRangeChange = (e: ChangeEvent) => {
     const { value } = e.target as HTMLInputElement;
     setChartRange(+value);
-    fetchCropData(+value, currentUser);
+    debounceFetchCropData(+value, currentUser);
   };
 
   useEffect(() => {

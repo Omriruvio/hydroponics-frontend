@@ -1,12 +1,5 @@
-// import { NORMAL_DATA_RANGE_METRIC } from './constants';
+import { NORMAL_DATA_RANGE_METRIC } from '../config';
 import { HydroponicsDataType } from './getColorRange';
-
-const NORMAL_DATA_RANGE_METRIC = {
-  EC: { MIN: 700, MAX: 3000 },
-  TEMPERATURE: { MIN: 18, MAX: 27 },
-  HUMIDITY: { MIN: 45, MAX: 65 },
-  PH: { MIN: 5, MAX: 6.5 },
-};
 
 /**
  * Returns boolean concluding whether the data of specified type is within normal range.

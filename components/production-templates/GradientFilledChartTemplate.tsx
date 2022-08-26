@@ -1,7 +1,7 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import { XAxis, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { GridChartContainer } from '../../styles/globalstyles';
-import { NORMAL_DATA_RANGE_METRIC } from '../../utils/constants';
+import { NORMAL_DATA_RANGE_METRIC } from '../../config';
 import { getColorRange, GradientBreakpoint } from '../../utils/getColorRange';
 import { CustomTooltip } from './../CustomTooltip';
 import { ChartProps } from './../UserChart';
