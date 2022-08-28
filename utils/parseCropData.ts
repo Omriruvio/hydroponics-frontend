@@ -10,6 +10,12 @@ export interface UserMessage {
   imageUrl?: string | null;
 }
 
+export interface ImageData {
+  _id: string;
+  imageUrl: string;
+  dateReceived: string;
+}
+
 export type RechartsTableData = Array<{ name: string; ph: number; ec: number; temperature: number; humidity: number }>;
 
 export const parseCropData = (messageHistory: UserMessage[]): RechartsTableData => {
@@ -27,4 +33,14 @@ export const parseCropData = (messageHistory: UserMessage[]): RechartsTableData 
     return data;
   }, []);
   return data;
+};
+
+export const parseImages = (data: ImageData[]) => {
+  if (Array.isArray(data)) {
+    return data.reduce<ImageData[]>((acc, message) => {
+      const { imageUrl, dateReceived, _id } = message;
+      if (imageUrl) acc.push({ _id, imageUrl, dateReceived });
+      return acc;
+    }, []);
+  } else return [];
 };

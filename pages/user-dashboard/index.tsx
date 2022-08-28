@@ -12,7 +12,7 @@ import Router from 'next/router';
 
 const UserDashboard = () => {
   const currentUser = useAuth();
-  const { mainChartData, imageData, chartRange, handleRangeChange } = useCropData();
+  const { mainChartData, imageData, chartRange, handleRangeChange } = useCropData(currentUser);
 
   useEffect(() => {
     if (!currentUser.isLoggedIn) {

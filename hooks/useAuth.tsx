@@ -1,14 +1,15 @@
 import { createContext, FunctionComponent, PropsWithChildren, useCallback, useContext, useState } from 'react';
 
-export interface UserAuth {
+export interface UserData {
   email: string;
   phoneNumber: string;
+}
+
+export interface UserAuth extends UserData {
   isAdmin: boolean;
 }
 
-export interface IUserContext {
-  email: string;
-  phoneNumber: string;
+export interface IUserContext extends UserData {
   isLoggedIn: boolean;
   isAdmin: boolean;
   login: (user: UserAuth) => void;
