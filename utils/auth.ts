@@ -2,7 +2,8 @@ import { BASE_URL } from '../config';
 
 export interface IUserAuth {
   email: string;
-  phoneNumber: string;
+  phoneNumber?: string | null;
+  password?: string;
 }
 
 const handleResponse = (res: Response): Promise<unknown> => {
@@ -25,6 +26,14 @@ const login = ({ email, phoneNumber }: IUserAuth): Promise<unknown> => {
   }).then(handleResponse);
 };
 
+const adminLogin = ({ email, password }: IUserAuth): Promise<unknown> => {
+  return fetch(`${BASE_URL}/super/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password }),
+  }).then(handleResponse);
+};
+
 // const validateToken = (token) => {
 //   return fetch(`${BASE_URL}/users/me`, {
 //     method: 'GET',
@@ -35,4 +44,4 @@ const login = ({ email, phoneNumber }: IUserAuth): Promise<unknown> => {
 //   }).then(handleResponse);
 // };
 
-export { login, register, handleResponse };
+export { login, register, handleResponse, adminLogin };

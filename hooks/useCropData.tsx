@@ -5,8 +5,9 @@ import { MAX_CHART_DAYS, RANGE_PICKER_DEBOUNCE_DELAY_MS } from '../config';
 import { getCropData } from '../utils/cropData';
 import { ImageData, parseCropData, parseImages, RechartsTableData } from '../utils/parseCropData';
 import { useAuth, UserData } from './useAuth';
+import { Grower } from './useGrowers';
 
-export const useCropData = (selectedUser: UserData) => {
+export const useCropData = (selectedUser: UserData | Grower | null) => {
   const [imageData, setImageData] = useState<ImageData[] | []>([]);
   const [mainChartData, setMainChartData] = useState<RechartsTableData>([]);
   const [chartRange, setChartRange] = useState(MAX_CHART_DAYS);
@@ -35,12 +36,12 @@ export const useCropData = (selectedUser: UserData) => {
   const handleRangeChange = (e: ChangeEvent) => {
     const { value } = e.target as HTMLInputElement;
     setChartRange(+value);
-    debounceFetchCropData(+value, selectedUser);
+    selectedUser && debounceFetchCropData(+value, selectedUser);
   };
 
   useEffect(() => {
     if (!currentUser.isLoggedIn) return;
-    fetchCropData(MAX_CHART_DAYS, selectedUser);
+    selectedUser && fetchCropData(MAX_CHART_DAYS, selectedUser);
   }, [currentUser, selectedUser, fetchCropData]);
   return { mainChartData, imageData, getCropData, chartRange, handleRangeChange };
 };

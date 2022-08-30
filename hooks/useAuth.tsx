@@ -2,7 +2,7 @@ import { createContext, FunctionComponent, PropsWithChildren, useCallback, useCo
 
 export interface UserData {
   email: string;
-  phoneNumber: string;
+  phoneNumber?: string | null;
 }
 
 export interface UserAuth extends UserData {
@@ -32,13 +32,13 @@ export const useAuth = (): IUserContext => useContext(UserContext);
 
 export const UserDataProvider: FunctionComponent<PropsWithChildren> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState<string>('');
+  const [phoneNumber, setPhoneNumber] = useState<string | null>('');
   const [email, setEmail] = useState<string>('');
   const [isAdmin, setIsAdmin] = useState(false);
-  const login = useCallback((user: { email: string; phoneNumber: string; isAdmin: boolean }) => {
+  const login = useCallback((user: { email: string; phoneNumber?: string | null; isAdmin: boolean }) => {
     const { email, phoneNumber, isAdmin } = user;
     setEmail(email);
-    setPhoneNumber(phoneNumber);
+    setPhoneNumber(phoneNumber || null);
     setIsAdmin(isAdmin);
     setIsLoggedIn(true);
   }, []);

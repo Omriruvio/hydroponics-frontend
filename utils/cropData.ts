@@ -12,3 +12,10 @@ export const getCropData = (days: number, user: IUserAuth) => {
     method: 'GET',
   }).then(handleResponse);
 };
+
+export const getGrowers = (superEmail: string) => {
+  return fetch(`${BASE_URL}/super/growers/${superEmail}`, {
+    headers: { 'Content-Type': 'application/json' },
+    method: 'GET',
+  }).then(handleResponse);
+};

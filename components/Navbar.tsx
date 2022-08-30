@@ -46,7 +46,7 @@ const Navbar = () => {
             </Link>
           )}
           {/* User dashboard link */}
-          {currentUser.isLoggedIn && (
+          {!currentUser.isAdmin && currentUser.isLoggedIn && (
             <Link href='/user-dashboard' passHref>
               <StyledLinkLabel isActive={pathname === '/user-dashboard'}>User</StyledLinkLabel>
             </Link>
