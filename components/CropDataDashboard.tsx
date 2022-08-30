@@ -9,12 +9,17 @@ import ChartRangePicker from './ChartRangePicker';
 import { DataBreakdown } from './DataBreakdown';
 import { DisplayDays } from './UserChart';
 
-const CropDataDashboard: FunctionComponent<{ currentUser: IUserContext | Grower | null }> = ({ currentUser }) => {
-  const { mainChartData, imageData, chartRange, handleRangeChange } = useCropData(currentUser);
+interface ICropDataDashboardProps {
+  currentUser: IUserContext | Grower | null;
+  isDisplayName?: Boolean;
+}
 
+const CropDataDashboard: FunctionComponent<ICropDataDashboardProps> = ({ currentUser, isDisplayName = false }) => {
+  const { mainChartData, imageData, chartRange, handleRangeChange } = useCropData(currentUser);
+  // const user = currentUser as Grower;
   return (
     <>
-      <StyledHeader>User Dashboard</StyledHeader>
+      <StyledHeader>{`User Dashboard ${isDisplayName ? ` - (${currentUser?.username})` : ''}`}</StyledHeader>
       <ChartRangePicker handleChartRangeChange={handleRangeChange} chartRange={chartRange}></ChartRangePicker>
       <DisplayDays>Displaying last {chartRange} days of data:</DisplayDays>
       {/* Combined chart currently commented out */}

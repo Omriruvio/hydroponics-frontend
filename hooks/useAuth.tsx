@@ -10,6 +10,7 @@ export interface UserAuth extends UserData {
 }
 
 export interface IUserContext extends UserData {
+  username?: string;
   isLoggedIn: boolean;
   isAdmin: boolean;
   login: (user: UserAuth) => void;

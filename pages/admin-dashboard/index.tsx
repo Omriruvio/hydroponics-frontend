@@ -30,19 +30,22 @@ const AdminDashboard = () => {
             <GrowerCard key={grower._id} grower={grower} onSelectGrower={setSelectedGrower} />
           ))}
         </StyledUl>
-        {selectedGrower ? <CropDataDashboard currentUser={selectedGrower} /> : <StyledHeader>Select a grower from the list above</StyledHeader>}
+        {selectedGrower ? (
+          <CropDataDashboard isDisplayName={true} currentUser={selectedGrower} />
+        ) : (
+          <StyledHeader>Select a grower from the list above</StyledHeader>
+        )}
       </StyledPage>
     )
   );
 };
 
 const StyledUl = styled.ul`
-  padding: 0;
+  padding: 0 0.5rem;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
   max-width: 100%;
-  margin: 40px 2rem;
   place-items: center;
 
   li {
@@ -51,9 +54,15 @@ const StyledUl = styled.ul`
     width: 100%;
   }
 
-  /* @media (max-width: 800px) {
-    grid-template-columns: 1fr 1fr;
-  } */
+  @media (min-width: 500px) {
+    padding: 0;
+    gap: 0.7rem;
+  }
+
+  @media (min-width: 800px) {
+    gap: 1rem;
+    grid-template-columns: repeat(4, 1fr);
+  }
 `;
 
 export default AdminDashboard;

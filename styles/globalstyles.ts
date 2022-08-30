@@ -44,7 +44,10 @@ export const GridChartContainer = styled.li`
 export const StyledPage = styled.div`
   margin: auto;
   max-width: 1440px;
-  padding: 0 2rem;
+
+  @media (min-width: 500px) {
+    padding: 0 2rem;
+  }
 `;
 
 export const StyledLabel = styled.label`

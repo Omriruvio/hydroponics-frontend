@@ -14,7 +14,7 @@ const HeaderWrapper = styled.div`
   justify-content: space-between;
   gap: 1rem;
   align-items: flex-start;
-  padding: 2.5rem 2rem 0;
+  padding: 2.5rem 0.5rem 0;
 `;
 
 const StyledLinkLabel = styled.a<{ isActive: boolean }>`
@@ -52,7 +52,7 @@ const Navbar = () => {
             </Link>
           )}
           {/* Admin link */}
-          {currentUser.isAdmin && (
+          {currentUser.isAdmin && currentUser.isLoggedIn && (
             <Link href='/admin-dashboard' passHref>
               <StyledLinkLabel isActive={pathname === '/admin-dashboard'}>Admin</StyledLinkLabel>
             </Link>
