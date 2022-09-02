@@ -1,21 +1,25 @@
 import { FunctionComponent } from 'react';
-import { LineChart, Line, XAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, Tooltip, Legend, ResponsiveContainer, YAxis } from 'recharts';
 import styled from 'styled-components';
+import { DEFAULT_CHART_MARGINS } from '../config';
 import { RechartsTableData } from '../utils/parseCropData';
 import { CustomDot } from './CustomDot';
 import { CustomTooltip } from './CustomTooltip';
 export interface ChartProps {
   chartData: RechartsTableData;
   daysDisplayed: number;
+  withYaxis?: boolean;
+  chartMargins?: { top: number; left: number; right: number; bottom: number };
 }
 
-const UserChart: FunctionComponent<ChartProps> = ({ chartData }) => {
+const UserChart: FunctionComponent<ChartProps> = ({ chartData, withYaxis, chartMargins = DEFAULT_CHART_MARGINS }) => {
   return (
     <>
       {/* <DisplayDays>Displaying last {daysDisplayed} days of data:</DisplayDays> */}
       <MainChartContainer>
         <ResponsiveContainer width='100%' height='100%'>
-          <LineChart width={750} height={300} data={chartData}>
+          <LineChart margin={chartMargins} width={750} height={300} data={chartData}>
+            {withYaxis && <YAxis />}
             <XAxis dataKey='name' />
             <Tooltip content={<CustomTooltip />} />
             <Legend verticalAlign='top' height={50} iconSize={16} wrapperStyle={{ fontSize: '1rem' }} />

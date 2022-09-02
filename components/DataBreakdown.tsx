@@ -35,9 +35,9 @@ export const DataBreakdown: FunctionComponent<{
 
   return (
     <DataBreakdownContainer>
-      <TemperatureChart chartData={chartsData.temperature} daysDisplayed={daysDisplayed}></TemperatureChart>
-      <PhChart chartData={chartsData.ph} daysDisplayed={daysDisplayed} />
-      <EcChart chartData={chartsData.ec} daysDisplayed={daysDisplayed} />
+      <TemperatureChart withYaxis chartData={chartsData.temperature} daysDisplayed={daysDisplayed}></TemperatureChart>
+      <PhChart withYaxis chartData={chartsData.ph} daysDisplayed={daysDisplayed} />
+      <EcChart withYaxis chartData={chartsData.ec} daysDisplayed={daysDisplayed} />
       {/* Humidity chart temporarily removed */}
       {/* <HumidityChart chartData={chartsData.humidity} daysDisplayed={daysDisplayed} /> */}
     </DataBreakdownContainer>

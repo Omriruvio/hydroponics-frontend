@@ -16,3 +16,5 @@ export const MIN_CHART_DAYS = 7;
 export const RANGE_STEP_SIZE = 7;
 
 export const RANGE_PICKER_DEBOUNCE_DELAY_MS = 500;
+
+export const DEFAULT_CHART_MARGINS = { top: 5, left: -15, right: 10, bottom: 5 };

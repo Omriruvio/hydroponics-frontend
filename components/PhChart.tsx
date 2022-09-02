@@ -1,13 +1,13 @@
 import { FunctionComponent, useEffect, useState } from 'react';
-import { XAxis, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 'recharts';
+import { XAxis, Tooltip, Legend, ResponsiveContainer, AreaChart, Area, YAxis } from 'recharts';
 import { GridChartContainer } from '../styles/globalstyles';
-import { NORMAL_DATA_RANGE_METRIC } from '../config';
+import { DEFAULT_CHART_MARGINS, NORMAL_DATA_RANGE_METRIC } from '../config';
 import { getColorRange, GradientBreakpoint } from '../utils/getColorRange';
 import { CustomDot } from './CustomDot';
 import { CustomTooltip } from './CustomTooltip';
 import { ChartProps } from './UserChart';
 
-const PhChart: FunctionComponent<ChartProps> = ({ chartData }) => {
+const PhChart: FunctionComponent<ChartProps> = ({ chartData, withYaxis, chartMargins = DEFAULT_CHART_MARGINS }) => {
   const [gradientBreakpoints, setGradientBreakpoints] = useState<GradientBreakpoint>({
     top: '0%',
     topNormal: '40%',
@@ -28,7 +28,8 @@ const PhChart: FunctionComponent<ChartProps> = ({ chartData }) => {
   return (
     <GridChartContainer>
       <ResponsiveContainer width='100%' height='100%'>
-        <AreaChart width={750} height={300} data={chartData}>
+        <AreaChart margin={chartMargins} width={750} height={300} data={chartData}>
+          {withYaxis && <YAxis />}
           <XAxis dataKey='name' />
           <Tooltip content={<CustomTooltip />} />
           <Legend verticalAlign='top' height={50} iconSize={16} wrapperStyle={{ fontSize: '1rem' }} />
