@@ -45,6 +45,7 @@ export const UserDataProvider: FunctionComponent<PropsWithChildren> = ({ childre
   }, []);
 
   const logout = () => {
+    localStorage.removeItem('adminJWT');
     setIsLoggedIn(false);
     setEmail('');
     setPhoneNumber('');

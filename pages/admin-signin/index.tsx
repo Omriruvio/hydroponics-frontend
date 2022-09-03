@@ -21,9 +21,12 @@ const AdminSignin = () => {
     event.preventDefault();
     const { email, password } = loginInputs;
     requestAdminLogin({ email, password })
-      .then(() => {
-        // set user context logged in
-        // set JWT in cookies
+      .then((res) => {
+        const response = res as { token: string };
+        if (!response.token) {
+          throw new Error('No token received.');
+        }
+        localStorage.setItem('adminJWT', response.token);
         currentUser.login({ email, isAdmin: true });
         resetForm();
         router.push('/admin-dashboard');

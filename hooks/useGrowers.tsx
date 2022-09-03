@@ -23,15 +23,19 @@ const useGrowers = () => {
   const currentUser = useAuth();
 
   useEffect(() => {
-    getGrowers(currentUser.email)
-      .then((data) => {
-        const growerData = data as SupervisorGrowersData;
-        const growers = growerData?.users;
-        if (Array.isArray(growers)) {
-          setGrowers(growers);
-        }
-      })
-      .catch((err) => console.log(err));
+    if (currentUser.isLoggedIn) {
+      const token = localStorage.getItem('adminJWT');
+      token &&
+        getGrowers(token)
+          .then((data) => {
+            const growerData = data as SupervisorGrowersData;
+            const growers = growerData?.users;
+            if (Array.isArray(growers)) {
+              setGrowers(growers);
+            }
+          })
+          .catch((err) => console.log(err));
+    }
   }, [currentUser]);
 
   return growers;

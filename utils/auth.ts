@@ -34,6 +34,16 @@ const adminLogin = ({ email, password }: IUserAuth): Promise<unknown> => {
   }).then(handleResponse);
 };
 
+const getAdminDetails = (token: string) => {
+  return fetch(`${BASE_URL}/super/verify`, {
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: `Bearer ` + token,
+    },
+    method: 'GET',
+  }).then(handleResponse);
+};
+
 // const validateToken = (token) => {
 //   return fetch(`${BASE_URL}/users/me`, {
 //     method: 'GET',
@@ -44,4 +54,4 @@ const adminLogin = ({ email, password }: IUserAuth): Promise<unknown> => {
 //   }).then(handleResponse);
 // };
 
-export { login, register, handleResponse, adminLogin };
+export { login, register, handleResponse, adminLogin, getAdminDetails };
