@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { IUserContext } from '../hooks/useAuth';
 import { useCropData } from '../hooks/useCropData';
 import { Grower } from '../hooks/useGrowers';
+import { usePopups } from '../hooks/usePopups';
 import { StyledHeader } from '../styles/globalstyles';
 import ChartRangePicker from './ChartRangePicker';
 import { DataBreakdown } from './DataBreakdown';
@@ -16,6 +17,7 @@ interface ICropDataDashboardProps {
 
 const CropDataDashboard: FunctionComponent<ICropDataDashboardProps> = ({ currentUser, isDisplayName = false }) => {
   const { mainChartData, imageData, chartRange, handleRangeChange } = useCropData(currentUser);
+  const popups = usePopups();
   // const user = currentUser as Grower;
   return (
     <>
@@ -29,7 +31,16 @@ const CropDataDashboard: FunctionComponent<ICropDataDashboardProps> = ({ current
       <StyledUl>
         {imageData.map(({ _id, imageUrl, dateReceived }) => (
           <li key={_id + dateReceived}>
-            <Image quality={100} objectFit='cover' width={'1600'} height={'900'} src={imageUrl} alt='user uploaded image'></Image>
+            <Image
+              onClick={() => popups.handleSelectImage(imageUrl)}
+              quality={100}
+              objectFit='cover'
+              width={'1600'}
+              height={'900'}
+              src={imageUrl}
+              alt='user uploaded image'
+              style={{ cursor: 'pointer' }}
+            ></Image>
             <ImageSentDateTag>{dateReceived.slice(0, 10)}</ImageSentDateTag>
           </li>
         ))}

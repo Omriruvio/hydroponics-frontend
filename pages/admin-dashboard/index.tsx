@@ -3,15 +3,18 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CropDataDashboard from '../../components/CropDataDashboard';
 import GrowerCard from '../../components/GrowerCard';
+import ImagePopup from '../../components/ImagePopup';
 import Navbar from '../../components/Navbar';
 import { useAuth } from '../../hooks/useAuth';
 import useGrowers, { Grower } from '../../hooks/useGrowers';
+import { usePopups } from '../../hooks/usePopups';
 import { StyledHeader, StyledPage } from '../../styles/globalstyles';
 
 const AdminDashboard = () => {
   const currentUser = useAuth();
   const growers = useGrowers();
   const [selectedGrower, setSelectedGrower] = useState<Grower | null>(null);
+  const popups = usePopups();
 
   useEffect(() => {
     if (!currentUser.isLoggedIn) {
@@ -23,6 +26,7 @@ const AdminDashboard = () => {
   return (
     currentUser.isLoggedIn && (
       <StyledPage>
+        {popups.isOpen.imagePopup && <ImagePopup></ImagePopup>}
         <Navbar></Navbar>
         <StyledHeader>Admin Dashboard</StyledHeader>
         <StyledUl>
