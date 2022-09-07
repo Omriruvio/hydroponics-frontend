@@ -9,6 +9,7 @@ import { useAuth } from '../../hooks/useAuth';
 interface RegisterInputs {
   email: string;
   phoneNumber: string;
+  username: string;
   confirm: string;
 }
 
@@ -43,6 +44,10 @@ const Signup = () => {
         <StyledLabel>
           Email
           <Input name='email' minLength={2} required={true} value={registerInputs.email || ''} onChange={handleChange} type='email'></Input>
+        </StyledLabel>
+        <StyledLabel>
+          Username
+          <Input name='username' minLength={4} required={true} value={registerInputs.username || ''} onChange={handleChange} type='text'></Input>
         </StyledLabel>
         <StyledLabel>
           Phone Number
