@@ -23,10 +23,10 @@ const Signin = () => {
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     const { email, phoneNumber } = loginInputs;
-    requestLogin({ email, phoneNumber })
-      .then(() => {
-        // set user context logged in
-        // set JWT in cookies
+    requestLogin({ email: email.toLocaleLowerCase(), phoneNumber })
+      .then((res) => {
+        const token = (res as { token: string }).token;
+        localStorage.setItem('jwt', token);
         currentUser.login({ email, phoneNumber, isAdmin: false });
         resetForm();
         router.push('/user-dashboard');

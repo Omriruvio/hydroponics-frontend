@@ -20,7 +20,7 @@ const AdminSignin = () => {
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     const { email, password } = loginInputs;
-    requestAdminLogin({ email, password })
+    requestAdminLogin({ email: email.toLocaleLowerCase(), password })
       .then((res) => {
         const response = res as { token: string };
         if (!response.token) {

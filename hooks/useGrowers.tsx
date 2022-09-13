@@ -24,9 +24,9 @@ const useGrowers = () => {
 
   useEffect(() => {
     if (currentUser.isLoggedIn) {
-      const token = localStorage.getItem('adminJWT');
-      token &&
-        getGrowers(token)
+      const adminToken = localStorage.getItem('adminJWT');
+      adminToken &&
+        getGrowers(adminToken)
           .then((data) => {
             const growerData = data as SupervisorGrowersData;
             const growers = growerData?.users;

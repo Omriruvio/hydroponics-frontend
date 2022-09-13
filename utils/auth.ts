@@ -44,14 +44,14 @@ const getAdminDetails = (token: string) => {
   }).then(handleResponse);
 };
 
-// const validateToken = (token) => {
-//   return fetch(`${BASE_URL}/users/me`, {
-//     method: 'GET',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Authorization: `Bearer ${token}`,
-//     },
-//   }).then(handleResponse);
-// };
+const getCurrentUser = (token: string) => {
+  return fetch(`${BASE_URL}/me`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(handleResponse);
+};
 
-export { login, register, handleResponse, adminLogin, getAdminDetails };
+export { login, register, handleResponse, adminLogin, getAdminDetails, getCurrentUser };
