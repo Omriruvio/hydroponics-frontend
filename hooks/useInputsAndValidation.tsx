@@ -3,6 +3,7 @@ import { useState, ChangeEvent, useCallback } from 'react';
 export function useInputsAndValidation() {
   const [inputs, setInputs] = useState({} as any);
   const [errors, setErrors] = useState({} as any);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [isValid, setIsValid] = useState(false);
 
   const handleChange = (event: ChangeEvent) => {
@@ -20,5 +21,5 @@ export function useInputsAndValidation() {
     [setInputs, setErrors, setIsValid]
   );
 
-  return { inputs, setInputs, errors, setErrors, isValid, setIsValid, handleChange, resetForm };
+  return { submitError, setSubmitError, inputs, setInputs, errors, setErrors, isValid, setIsValid, handleChange, resetForm };
 }

@@ -1,4 +1,4 @@
-import { FieldError, Input, StyledHeader, StyledLabel, StyledPage, SubmitButton } from '../../styles/globalstyles';
+import { FieldError, Input, StyledHeader, StyledLabel, StyledPage, SubmitButton, SubmitError } from '../../styles/globalstyles';
 import Navbar from '../../components/Navbar';
 import { FormEvent } from 'react';
 import { useInputsAndValidation } from '../../hooks/useInputsAndValidation';
@@ -16,7 +16,7 @@ interface RegisterInputs {
 // TODO: Implement custom error messages
 
 const Signup = () => {
-  const { handleChange, inputs, isValid, resetForm, errors } = useInputsAndValidation();
+  const { handleChange, inputs, isValid, resetForm, errors, submitError, setSubmitError } = useInputsAndValidation();
   const currentUser = useAuth();
   const router = useRouter();
   const registerInputs = inputs as RegisterInputs;
@@ -33,7 +33,11 @@ const Signup = () => {
         currentUser.register({ email, phoneNumber, isAdmin: false });
         resetForm();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err === 'Error: 409') setSubmitError('User already exists');
+        else setSubmitError('Something went wrong');
+        console.log(err);
+      });
   };
 
   return (
@@ -60,7 +64,7 @@ const Signup = () => {
           Confirm password
           <Input name='confirm' minLength={6} required={true} value={registerInputs.confirm || ''} onChange={handleChange} type='tel'></Input>
         </StyledLabel> */}
-
+        <SubmitError>{submitError}</SubmitError>
         <SubmitButton disabled={!isValid} isValid={isValid} type='submit'>
           Register
         </SubmitButton>

@@ -118,6 +118,18 @@ export const SubmitButton = styled.button<{ isValid: boolean }>`
   }
 `;
 
+export const SubmitError = styled.p`
+  color: var(--errorRed);
+  font-size: 1.5rem;
+  text-align: center;
+  @media (min-width: 750px) {
+    font-size: 1.7rem;
+  }
+  @media (min-width: 1000px) {
+    font-size: 2.2rem;
+  }
+`;
+
 export const FieldError = styled.span`
   --baseSize: 1.1rem;
   --midSize: 1.4rem;

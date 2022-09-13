@@ -1,7 +1,7 @@
 import { FormEvent } from 'react';
 import Navbar from '../../components/Navbar';
 import { useInputsAndValidation } from '../../hooks/useInputsAndValidation';
-import { FieldError, Input, StyledHeader, StyledLabel, StyledPage, SubmitButton } from '../../styles/globalstyles';
+import { FieldError, Input, StyledHeader, StyledLabel, StyledPage, SubmitButton, SubmitError } from '../../styles/globalstyles';
 import { adminLogin as requestAdminLogin } from '../../utils/auth';
 import { useRouter } from 'next/router';
 import { useAuth } from '../../hooks/useAuth';
@@ -15,7 +15,7 @@ interface AdminLoginInputs {
 const AdminSignin = () => {
   const currentUser = useAuth();
   const router = useRouter();
-  const { handleChange, inputs, isValid, resetForm, errors } = useInputsAndValidation();
+  const { handleChange, inputs, isValid, resetForm, errors, submitError, setSubmitError } = useInputsAndValidation();
   const loginInputs = inputs as AdminLoginInputs;
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -31,7 +31,11 @@ const AdminSignin = () => {
         resetForm();
         router.push('/admin-dashboard');
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err === 'Error: 403') setSubmitError('Invalid email or password');
+        else setSubmitError('Something went wrong');
+        console.log(err);
+      });
   };
   return (
     <StyledPage>
@@ -48,6 +52,7 @@ const AdminSignin = () => {
           <Input name='password' value={loginInputs.password || ''} required={true} minLength={6} onChange={handleChange} type='password'></Input>
         </StyledLabel>
         <FieldError>{errors.password}</FieldError>
+        <SubmitError>{submitError}</SubmitError>
         <SubmitButton disabled={!isValid} isValid={isValid} type='submit'>
           Log in
         </SubmitButton>
