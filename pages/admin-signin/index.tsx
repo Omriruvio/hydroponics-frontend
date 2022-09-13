@@ -1,7 +1,7 @@
 import { FormEvent } from 'react';
 import Navbar from '../../components/Navbar';
 import { useInputsAndValidation } from '../../hooks/useInputsAndValidation';
-import { Input, StyledHeader, StyledLabel, StyledPage, SubmitButton } from '../../styles/globalstyles';
+import { FieldError, Input, StyledHeader, StyledLabel, StyledPage, SubmitButton } from '../../styles/globalstyles';
 import { adminLogin as requestAdminLogin } from '../../utils/auth';
 import { useRouter } from 'next/router';
 import { useAuth } from '../../hooks/useAuth';
@@ -15,7 +15,7 @@ interface AdminLoginInputs {
 const AdminSignin = () => {
   const currentUser = useAuth();
   const router = useRouter();
-  const { handleChange, inputs, isValid, resetForm } = useInputsAndValidation();
+  const { handleChange, inputs, isValid, resetForm, errors } = useInputsAndValidation();
   const loginInputs = inputs as AdminLoginInputs;
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -42,10 +42,12 @@ const AdminSignin = () => {
           Email
           <Input name='email' value={loginInputs.email || ''} required={true} minLength={2} onChange={handleChange} type='email'></Input>
         </StyledLabel>
+        <FieldError>{errors.email}</FieldError>
         <StyledLabel>
           Password
           <Input name='password' value={loginInputs.password || ''} required={true} minLength={6} onChange={handleChange} type='password'></Input>
         </StyledLabel>
+        <FieldError>{errors.password}</FieldError>
         <SubmitButton disabled={!isValid} isValid={isValid} type='submit'>
           Log in
         </SubmitButton>

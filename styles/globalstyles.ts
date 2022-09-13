@@ -2,6 +2,10 @@ import { createGlobalStyle } from 'styled-components';
 import styled from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
+  :root {
+    --errorRed: #cc0000;
+  }
+
   html {
     font-size: 62.5%;
   }
@@ -53,7 +57,6 @@ export const StyledPage = styled.div`
 export const StyledLabel = styled.label`
   display: flex;
   flex-direction: column;
-  margin-bottom: 0.6rem;
 
   @media (min-width: 750px) {
     font-size: 1.7rem;
@@ -112,5 +115,32 @@ export const SubmitButton = styled.button<{ isValid: boolean }>`
   @media (min-width: 1000px) {
     font-size: 2.5rem;
     line-height: 4.5rem;
+  }
+`;
+
+export const FieldError = styled.span`
+  --baseSize: 1.1rem;
+  --midSize: 1.4rem;
+  --largeSize: 1.7rem;
+  --baseMargin: 0.2rem;
+  min-height: calc(var(--baseSize) + var(--baseMargin) * 2);
+  margin: var(--baseMargin) 0;
+  padding: 0;
+  color: var(--errorRed);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  @media (min-width: 750px) {
+    --midMargin: calc(var(--baseMargin) * 1.5);
+    font-size: var(--midSize);
+    min-height: calc(var(--midSize) + var(--midMargin) * 2);
+  }
+  @media (min-width: 1000px) {
+    --largeMargin: calc(var(--baseMargin) * 2);
+    font-size: var(--largeSize);
+    min-height: calc(var(--largeSize) + var(--largeMargin) * 2);
   }
 `;

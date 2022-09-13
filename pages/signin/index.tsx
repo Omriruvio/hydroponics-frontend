@@ -1,7 +1,7 @@
 import { FormEvent } from 'react';
 import Navbar from '../../components/Navbar';
 import { useInputsAndValidation } from '../../hooks/useInputsAndValidation';
-import { Input, StyledHeader, StyledLabel, StyledPage, SubmitButton } from '../../styles/globalstyles';
+import { FieldError, Input, StyledHeader, StyledLabel, StyledPage, SubmitButton } from '../../styles/globalstyles';
 import { login as requestLogin } from '../../utils/auth';
 import { useRouter } from 'next/router';
 import { useAuth } from '../../hooks/useAuth';
@@ -17,7 +17,7 @@ interface LoginInputs {
 const Signin = () => {
   const currentUser = useAuth();
   const router = useRouter();
-  const { handleChange, inputs, isValid, resetForm } = useInputsAndValidation();
+  const { handleChange, inputs, isValid, resetForm, errors } = useInputsAndValidation();
   const loginInputs = inputs as LoginInputs;
 
   const handleSubmit = (event: FormEvent) => {
@@ -43,10 +43,12 @@ const Signin = () => {
           Email
           <Input name='email' value={loginInputs.email || ''} required={true} minLength={2} onChange={handleChange} type='email'></Input>
         </StyledLabel>
+        <FieldError>{errors.email}</FieldError>
         <StyledLabel>
           Phone number
           <Input name='phoneNumber' value={loginInputs.phoneNumber || ''} required={true} minLength={6} onChange={handleChange} type='tel'></Input>
         </StyledLabel>
+        <FieldError>{errors.phoneNumber}</FieldError>
         <SubmitButton disabled={!isValid} isValid={isValid} type='submit'>
           Log in
         </SubmitButton>

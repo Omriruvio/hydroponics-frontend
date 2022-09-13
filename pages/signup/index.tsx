@@ -1,4 +1,4 @@
-import { Input, StyledHeader, StyledLabel, StyledPage, SubmitButton } from '../../styles/globalstyles';
+import { FieldError, Input, StyledHeader, StyledLabel, StyledPage, SubmitButton } from '../../styles/globalstyles';
 import Navbar from '../../components/Navbar';
 import { FormEvent } from 'react';
 import { useInputsAndValidation } from '../../hooks/useInputsAndValidation';
@@ -16,7 +16,7 @@ interface RegisterInputs {
 // TODO: Implement custom error messages
 
 const Signup = () => {
-  const { handleChange, inputs, isValid, resetForm } = useInputsAndValidation();
+  const { handleChange, inputs, isValid, resetForm, errors } = useInputsAndValidation();
   const currentUser = useAuth();
   const router = useRouter();
   const registerInputs = inputs as RegisterInputs;
@@ -45,14 +45,17 @@ const Signup = () => {
           Email
           <Input name='email' minLength={2} required={true} value={registerInputs.email || ''} onChange={handleChange} type='email'></Input>
         </StyledLabel>
+        <FieldError>{errors.email}</FieldError>
         <StyledLabel>
           Username
           <Input name='username' minLength={4} required={true} value={registerInputs.username || ''} onChange={handleChange} type='text'></Input>
         </StyledLabel>
+        <FieldError>{errors.username}</FieldError>
         <StyledLabel>
           Phone Number
           <Input name='phoneNumber' minLength={6} required={true} value={registerInputs.phoneNumber || ''} onChange={handleChange} type='tel'></Input>
         </StyledLabel>
+        <FieldError>{errors.phoneNumber}</FieldError>
         {/* <StyledLabel>
           Confirm password
           <Input name='confirm' minLength={6} required={true} value={registerInputs.confirm || ''} onChange={handleChange} type='tel'></Input>
