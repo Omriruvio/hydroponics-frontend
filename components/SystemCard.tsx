@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { System } from '../hooks/useSystems';
@@ -12,6 +13,7 @@ const SystemCard: FunctionComponent<SystemCardProps> = ({ system, onSelectSystem
     <StyledSystemCard onClick={() => onSelectSystem(system)}>
       <SystemCardHeader>{system.name}</SystemCardHeader>
       <SystemDetails>Owner - {system.ownerName}</SystemDetails>
+      <SystemDetails>Updated - {moment(system.dateModified).format('ddd, hA')}</SystemDetails>
       {/* <SystemDetails>Owner number - {system.ownerPhoneNumber.match(/\d+/)}</SystemDetails> */}
     </StyledSystemCard>
   );
