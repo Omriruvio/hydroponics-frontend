@@ -7,7 +7,7 @@ import { ImageData, parseCropData, parseImages, RechartsTableData } from '../uti
 import { useAuth, UserData } from './useAuth';
 import { Grower } from './useGrowers';
 
-export const useCropData = (selectedUser: UserData | Grower | null) => {
+export const useCropData = (selectedUser: UserData | Grower | null, systemId: string) => {
   const [imageData, setImageData] = useState<ImageData[] | []>([]);
   const [mainChartData, setMainChartData] = useState<RechartsTableData>([]);
   const [chartRange, setChartRange] = useState(MAX_CHART_DAYS);
@@ -21,8 +21,8 @@ export const useCropData = (selectedUser: UserData | Grower | null) => {
   }, []);
 
   const fetchCropData = useCallback(
-    (days: number, user: IUserAuth) => {
-      return getCropData(days, user)
+    (days: number, user: IUserAuth, systemId: string | undefined) => {
+      return getCropData(days, user, systemId)
         .then(updateCharts)
         .catch((err) => console.log(err));
     },
@@ -36,12 +36,12 @@ export const useCropData = (selectedUser: UserData | Grower | null) => {
   const handleRangeChange = (e: ChangeEvent) => {
     const { value } = e.target as HTMLInputElement;
     setChartRange(+value);
-    selectedUser && debounceFetchCropData(+value, selectedUser);
+    selectedUser && debounceFetchCropData(+value, selectedUser, systemId);
   };
 
   useEffect(() => {
     if (!currentUser.isLoggedIn) return;
-    selectedUser && fetchCropData(MAX_CHART_DAYS, selectedUser);
-  }, [currentUser, selectedUser, fetchCropData]);
+    selectedUser && fetchCropData(MAX_CHART_DAYS, selectedUser, systemId);
+  }, [currentUser, selectedUser, fetchCropData, systemId]);
   return { mainChartData, imageData, getCropData, chartRange, handleRangeChange };
 };

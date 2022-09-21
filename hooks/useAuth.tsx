@@ -13,6 +13,7 @@ export interface IUserContext extends UserData {
   username?: string;
   isLoggedIn: boolean;
   isAdmin: boolean;
+  systemId?: string | undefined;
   login: (user: UserAuth) => void;
   logout: () => void;
   register: (user: UserAuth) => void;

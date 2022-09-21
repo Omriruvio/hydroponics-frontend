@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
+import { BASE_URL } from '../config';
 import { getGrowers } from '../utils/cropData';
 import { useAuth } from './useAuth';
 
@@ -11,6 +12,7 @@ export interface Grower {
   receiveReminders: boolean;
   lastReceivedPush: Date;
   username: string;
+  defaultSystem?: string;
 }
 
 export interface SupervisorGrowersData {
@@ -21,6 +23,20 @@ export interface SupervisorGrowersData {
 const useGrowers = () => {
   const [growers, setGrowers] = useState<Grower[]>([]);
   const currentUser = useAuth();
+
+  const getDefaultSystem = useCallback(async (phoneNumber: string) => {
+    // fetch from BASE_URL/get-default-system?phoneNumber=${phoneNumber}
+    const token = localStorage.getItem('jwt');
+    const defaultSystem = await fetch(`${BASE_URL}/get-default-system?` + new URLSearchParams({ phoneNumber }), {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .catch((err) => console.log(err));
+    return defaultSystem;
+  }, []);
 
   useEffect(() => {
     if (currentUser.isLoggedIn) {
@@ -38,7 +54,7 @@ const useGrowers = () => {
     }
   }, [currentUser]);
 
-  return growers;
+  return { growers, getDefaultSystem };
 };
 
 export default useGrowers;

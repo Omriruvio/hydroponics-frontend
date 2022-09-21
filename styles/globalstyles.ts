@@ -66,6 +66,31 @@ export const StyledLabel = styled.label`
   }
 `;
 
+export const StyledUl = styled.ul`
+  padding: 0 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  max-width: 100%;
+  place-items: center;
+
+  li {
+    overflow: hidden;
+    list-style: none;
+    width: 100%;
+  }
+
+  @media (min-width: 500px) {
+    padding: 0;
+    gap: 0.7rem;
+  }
+
+  @media (min-width: 800px) {
+    gap: 1rem;
+    grid-template-columns: repeat(4, 1fr);
+  }
+`;
+
 export const Input = styled.input`
   margin-top: 0.2rem;
   min-width: 200px;

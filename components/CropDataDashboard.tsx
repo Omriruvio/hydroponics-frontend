@@ -5,6 +5,7 @@ import { IUserContext } from '../hooks/useAuth';
 import { useCropData } from '../hooks/useCropData';
 import { Grower } from '../hooks/useGrowers';
 import { usePopups } from '../hooks/usePopups';
+import { System } from '../hooks/useSystems';
 import { StyledHeader } from '../styles/globalstyles';
 import ChartRangePicker from './ChartRangePicker';
 import { DataBreakdown } from './DataBreakdown';
@@ -12,39 +13,47 @@ import { DisplayDays } from './UserChart';
 
 interface ICropDataDashboardProps {
   currentUser: IUserContext | Grower | null;
+  selectedSystem: System;
   isDisplayName?: Boolean;
 }
 
-const CropDataDashboard: FunctionComponent<ICropDataDashboardProps> = ({ currentUser, isDisplayName = false }) => {
-  const { mainChartData, imageData, chartRange, handleRangeChange } = useCropData(currentUser);
+const CropDataDashboard: FunctionComponent<ICropDataDashboardProps> = ({ currentUser, selectedSystem, isDisplayName = false }) => {
+  const { mainChartData, imageData, chartRange, handleRangeChange } = useCropData(currentUser, selectedSystem._id);
   const popups = usePopups();
-  // const user = currentUser as Grower;
+  const dashboardHeader = `User Dashboard ${isDisplayName ? ` - (${currentUser?.username})` : ''} ${
+    selectedSystem.name ? ` - (${selectedSystem.name})` : ''
+  }`;
+
   return (
     <>
-      <StyledHeader>{`User Dashboard ${isDisplayName ? ` - (${currentUser?.username})` : ''}`}</StyledHeader>
+      <StyledHeader>{dashboardHeader}</StyledHeader>
       <ChartRangePicker handleChartRangeChange={handleRangeChange} chartRange={chartRange}></ChartRangePicker>
       <DisplayDays>Displaying last {chartRange} days of data:</DisplayDays>
       {/* Combined chart currently commented out */}
       {/* <UserChart chartData={mainChartData} daysDisplayed={chartRange}></UserChart> */}
       <DataBreakdown chartData={mainChartData} daysDisplayed={chartRange} />
-      <StyledHeader>Image Uploads</StyledHeader>
-      <StyledUl>
-        {imageData.map(({ _id, imageUrl, dateReceived }) => (
-          <li key={_id + dateReceived}>
-            <Image
-              onClick={() => popups.handleSelectImage(imageUrl)}
-              quality={100}
-              objectFit='cover'
-              width={'1600'}
-              height={'900'}
-              src={imageUrl}
-              alt='user uploaded image'
-              style={{ cursor: 'pointer' }}
-            ></Image>
-            <ImageSentDateTag>{dateReceived.slice(0, 10)}</ImageSentDateTag>
-          </li>
-        ))}
-      </StyledUl>
+      {imageData.length > 0 && (
+        <>
+          <StyledHeader>Image Uploads</StyledHeader>
+          <StyledUl>
+            {imageData.map(({ _id, imageUrl, dateReceived }) => (
+              <li key={_id + dateReceived}>
+                <Image
+                  onClick={() => popups.handleSelectImage(imageUrl)}
+                  quality={100}
+                  objectFit='cover'
+                  width={'1600'}
+                  height={'900'}
+                  src={imageUrl}
+                  alt='user uploaded image'
+                  style={{ cursor: 'pointer' }}
+                ></Image>
+                <ImageSentDateTag>{dateReceived.slice(0, 10)}</ImageSentDateTag>
+              </li>
+            ))}
+          </StyledUl>
+        </>
+      )}
     </>
   );
 };

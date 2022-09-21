@@ -1,6 +1,5 @@
 import Router from 'next/router';
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import CropDataDashboard from '../../components/CropDataDashboard';
 import GrowerCard from '../../components/GrowerCard';
 import ImagePopup from '../../components/ImagePopup';
@@ -8,13 +7,24 @@ import Navbar from '../../components/Navbar';
 import { useAuth } from '../../hooks/useAuth';
 import useGrowers, { Grower } from '../../hooks/useGrowers';
 import { usePopups } from '../../hooks/usePopups';
-import { StyledHeader, StyledPage } from '../../styles/globalstyles';
+import useSystems from '../../hooks/useSystems';
+import { StyledHeader, StyledPage, StyledUl } from '../../styles/globalstyles';
 
 const AdminDashboard = () => {
   const currentUser = useAuth();
-  const growers = useGrowers();
+  const { growers, getDefaultSystem } = useGrowers();
   const [selectedGrower, setSelectedGrower] = useState<Grower | null>(null);
   const popups = usePopups();
+  const { /* data: system, */ selectedSystem, setSelectSystem } = useSystems();
+
+  // on change to selected grower setSelectSystem with the growers default system
+  useEffect(() => {
+    if (selectedGrower?.defaultSystem) {
+      getDefaultSystem(selectedGrower.phoneNumber).then((system) => {
+        setSelectSystem(system);
+      });
+    }
+  }, [selectedGrower, setSelectSystem, getDefaultSystem]);
 
   useEffect(() => {
     if (!currentUser.isLoggedIn) {
@@ -34,8 +44,8 @@ const AdminDashboard = () => {
             <GrowerCard key={grower._id} grower={grower} onSelectGrower={setSelectedGrower} />
           ))}
         </StyledUl>
-        {selectedGrower ? (
-          <CropDataDashboard isDisplayName={true} currentUser={selectedGrower} />
+        {selectedGrower && selectedSystem ? (
+          <CropDataDashboard isDisplayName={true} currentUser={selectedGrower} selectedSystem={selectedSystem} />
         ) : (
           <StyledHeader>Select a grower from the list above</StyledHeader>
         )}
@@ -43,30 +53,5 @@ const AdminDashboard = () => {
     )
   );
 };
-
-const StyledUl = styled.ul`
-  padding: 0 0.5rem;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem;
-  max-width: 100%;
-  place-items: center;
-
-  li {
-    overflow: hidden;
-    list-style: none;
-    width: 100%;
-  }
-
-  @media (min-width: 500px) {
-    padding: 0;
-    gap: 0.7rem;
-  }
-
-  @media (min-width: 800px) {
-    gap: 1rem;
-    grid-template-columns: repeat(4, 1fr);
-  }
-`;
 
 export default AdminDashboard;

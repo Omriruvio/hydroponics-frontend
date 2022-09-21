@@ -18,6 +18,8 @@ const useToken = () => {
         })
         .catch((err) => {
           console.log(err);
+          // delete the token if it's invalid
+          localStorage.removeItem('adminJWT');
           router.replace('/admin-signin');
         });
     } else if (userToken) {
@@ -29,6 +31,8 @@ const useToken = () => {
         })
         .catch((err) => {
           console.log(err);
+          // delete the token if it's invalid
+          localStorage.removeItem('jwt');
           router.replace('/user-signin');
         });
     } else if (!currentUser.isLoggedIn) router.replace('/signin');

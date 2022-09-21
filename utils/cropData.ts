@@ -3,11 +3,13 @@ import { handleResponse, IUserAuth } from './auth';
 
 /**
  * @param days number representing amount of days in history to be fetched
+ * @param user IUserAuth object containing user authentication data
+ * @param systemId mongoos ObjectId of the system to be fetched
  * @returns Promisified array containing crop data results
  */
 
-export const getCropData = (days: number, user: IUserAuth) => {
-  return fetch(`${BASE_URL}/history/${user.phoneNumber}/${days}`, {
+export const getCropData = (days: number, user: IUserAuth, systemId: string | undefined) => {
+  return fetch(`${BASE_URL}/history/${user.phoneNumber}/${days}/${systemId}`, {
     headers: { 'Content-Type': 'application/json' },
     method: 'GET',
   }).then(handleResponse);
