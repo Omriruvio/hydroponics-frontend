@@ -1,19 +1,36 @@
+// 'positive', 'likely-positive', 'likely-negative', 'negative', 'uncertain'
+export type HealthStateLikeliness = 'positive' | 'likely-positive' | 'likely-negative' | 'negative' | 'uncertain';
+export interface HealthState {
+  isHealthy: HealthStateLikeliness;
+  hasPestPresence: HealthStateLikeliness;
+  hasDeficiencies: HealthStateLikeliness;
+}
+
 export interface UserMessage {
-  dateReceived: string;
-  messageBody: string;
-  temperature?: string | null;
-  humidity?: string | null;
-  ph?: string | null;
-  ec?: string | null;
-  handled: boolean;
+  healthState: HealthState;
   _id: string;
-  imageUrl?: string | null;
+  user: string;
+  system: string;
+  systemName: string;
+  systemOwnerName: string;
+  senderName: string;
+  senderPhoneNumber: string;
+  dateReceived: Date;
+  messageBody: string;
+  temperature?: string;
+  humidity?: string;
+  ph?: string;
+  ec?: string;
+  handled: boolean;
+  __v: number;
+  imageUrl?: string;
 }
 
 export interface ImageData {
   _id: string;
   imageUrl: string;
   dateReceived: string;
+  healthState?: HealthState;
 }
 
 export type RechartsTableData = Array<{ name: string; ph: number; ec: number; temperature: number; humidity: number }>;
@@ -38,8 +55,8 @@ export const parseCropData = (messageHistory: UserMessage[]): RechartsTableData 
 export const parseImages = (data: ImageData[]) => {
   if (Array.isArray(data)) {
     return data.reduce<ImageData[]>((acc, message) => {
-      const { imageUrl, dateReceived, _id } = message;
-      if (imageUrl) acc.push({ _id, imageUrl, dateReceived });
+      const { imageUrl, dateReceived, _id, healthState } = message;
+      if (imageUrl) acc.push({ _id, imageUrl, dateReceived, healthState });
       return acc;
     }, []);
   } else return [];

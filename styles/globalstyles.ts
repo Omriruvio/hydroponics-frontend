@@ -3,7 +3,11 @@ import styled from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
   :root {
-    --errorRed: #cc0000;
+    --errorRed: #a20000;
+    /* 171 71 39 */
+    --warningOrange: #E95B2D;
+    --mainGreen: rgb(46, 80, 60);
+    --lightGreen: rgb(106,184,139);
   }
 
   html {

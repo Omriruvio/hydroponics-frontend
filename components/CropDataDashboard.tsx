@@ -7,9 +7,11 @@ import { Grower } from '../hooks/useGrowers';
 import { usePopups } from '../hooks/usePopups';
 import { System } from '../hooks/useSystems';
 import { StyledHeader } from '../styles/globalstyles';
+import { HealthState, ImageData } from '../utils/parseCropData';
 import ChartRangePicker from './ChartRangePicker';
 import { DataBreakdown } from './DataBreakdown';
 import { DisplayDays } from './UserChart';
+import moment from 'moment';
 
 interface ICropDataDashboardProps {
   currentUser: IUserContext | Grower | null;
@@ -36,27 +38,56 @@ const CropDataDashboard: FunctionComponent<ICropDataDashboardProps> = ({ current
         <>
           <StyledHeader>Image Uploads</StyledHeader>
           <StyledUl>
-            {imageData.map(({ _id, imageUrl, dateReceived }) => (
-              <li key={_id + dateReceived}>
-                <Image
-                  onClick={() => popups.handleSelectImage(imageUrl)}
-                  quality={100}
-                  objectFit='cover'
-                  width={'1600'}
-                  height={'900'}
-                  src={imageUrl}
-                  alt='user uploaded image'
-                  style={{ cursor: 'pointer' }}
-                ></Image>
-                <ImageSentDateTag>{dateReceived.slice(0, 10)}</ImageSentDateTag>
-              </li>
-            ))}
+            {(imageData as ImageData[]).reduceRight((acc: JSX.Element[], { _id, imageUrl, dateReceived, healthState }: ImageData) => {
+              acc.push(
+                <ImageCardContainer key={_id + dateReceived}>
+                  <Image
+                    onClick={() => popups.handleSelectImage(imageUrl)}
+                    quality={100}
+                    objectFit='cover'
+                    width={'1600'}
+                    height={'900'}
+                    src={imageUrl}
+                    alt='user uploaded image'
+                    style={{ cursor: 'pointer' }}
+                  ></Image>
+                  <ImageDetails health={healthState}>
+                    <ImageSentDateTag>{moment(dateReceived).format('D/M/Y')}</ImageSentDateTag>
+                    {/* <pre>{JSON.stringify(healthState)}</pre> */}
+                  </ImageDetails>
+                </ImageCardContainer>
+              );
+              return acc;
+            }, [])}
           </StyledUl>
         </>
       )}
     </>
   );
 };
+
+const ImageCardContainer = styled.li`
+  /* border: var(--mainGreen) 2px solid; */
+
+  &:hover {
+    /* border: var(--lightGreen) 2px solid; */
+  }
+`;
+
+interface IImageDetailsProps {
+  health?: HealthState;
+  children?: JSX.Element | JSX.Element[];
+}
+
+const ImageDetails = styled.div<IImageDetailsProps>`
+  padding: 0.5rem;
+  border-top: ${(props) =>
+    props.health?.isHealthy
+      ? 'var(--lightGreen) 10px solid'
+      : props.health?.hasPestPresence || props.health?.hasDeficiencies
+      ? 'var(--errorRed) 10px solid'
+      : 'transparent 10px solid'};
+`;
 
 const ImageSentDateTag = styled.span`
   display: block;
