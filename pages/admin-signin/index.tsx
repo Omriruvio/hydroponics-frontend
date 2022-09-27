@@ -39,7 +39,7 @@ const AdminSignin = () => {
   };
   return (
     <StyledPage>
-      <Navbar></Navbar>
+      <Navbar />
       <StyledHeader>Admin Log in</StyledHeader>
       <form onSubmit={handleSubmit} className='form_type_onboarding'>
         <StyledLabel>

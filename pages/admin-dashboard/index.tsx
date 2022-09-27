@@ -37,7 +37,7 @@ const AdminDashboard = () => {
     currentUser.isLoggedIn && (
       <StyledPage>
         {popups.isOpen.imagePopup && <ImagePopup></ImagePopup>}
-        <Navbar></Navbar>
+        <Navbar />
         <StyledHeader>Admin Dashboard</StyledHeader>
         <StyledUl>
           {growers.map((grower) => (

@@ -3,35 +3,28 @@ import Link from 'next/link';
 import { MainLogo } from './MainLogo';
 import { useRouter } from 'next/router';
 import { useAuth } from '../hooks/useAuth';
-
-const Nav = styled.div`
-  display: flex;
-  gap: 1rem;
-`;
+import { observer } from 'mobx-react-lite';
+import { useDropdown } from '../store/DropdownState';
+import AccountDropdown from './AccountDropdown';
+import { StyledLinkLabel, Nav } from '../styles/globalstyles';
 
 const HeaderWrapper = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  align-items: flex-start;
-  padding: 2.5rem 0.5rem 0;
-`;
-
-const StyledLinkLabel = styled.a<{ isActive: boolean }>`
-  border-bottom: ${({ isActive }) => isActive && '1px solid rgb(106, 184, 139)'};
-  font-size: 1.2rem;
-
-  @media (min-width: 750px) {
-    font-size: 2rem;
-  }
-  @media (min-width: 1000px) {
-    font-size: 2.5rem;
-  }
+  align-items: center;
+  /* justify-content: center; */
+  padding-top: var(--headerPaddingTop);
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+  padding-bottom: 0;
 `;
 
 const Navbar = () => {
   const { pathname } = useRouter();
   const currentUser = useAuth();
+  const dropdown = useDropdown();
 
   return (
     <>
@@ -63,6 +56,12 @@ const Navbar = () => {
               <StyledLinkLabel isActive={pathname === '/signin'}>Login</StyledLinkLabel>
             </Link>
           )}
+          {/* Account link */}
+          {currentUser.isLoggedIn && (
+            <StyledLinkLabel onClick={() => dropdown?.toggle()} isActive={pathname === '/signin'}>
+              Account
+            </StyledLinkLabel>
+          )}
           {/* Log out link */}
           {currentUser.isLoggedIn && (
             <Link href='/signin' passHref>
@@ -78,9 +77,10 @@ const Navbar = () => {
             </Link>
           )}
         </Nav>
+        {dropdown.isOpen && <AccountDropdown />}
       </HeaderWrapper>
     </>
   );
 };
 
-export default Navbar;
+export default observer(Navbar);

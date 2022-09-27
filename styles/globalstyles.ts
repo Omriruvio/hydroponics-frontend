@@ -4,10 +4,23 @@ import styled from 'styled-components';
 export const GlobalStyles = createGlobalStyle`
   :root {
     --errorRed: #a20000;
-    /* 171 71 39 */
     --warningOrange: #E95B2D;
     --mainGreen: rgb(46, 80, 60);
     --lightGreen: rgb(106,184,139);
+    --headerHeight: 1.8rem;
+    --headerPaddingTop: 2.5rem;
+
+    @media (min-width: 760px) {
+      --headerHeight: 2.6rem;
+    }
+
+    @media (min-width: 1000px) {
+      --headerHeight: 3.2rem;
+    }
+
+    /* @media (min-width: 1440px) {
+      --headerHeight: 4.2rem;
+    } */
   }
 
   html {
@@ -52,6 +65,8 @@ export const GridChartContainer = styled.li`
 export const StyledPage = styled.div`
   margin: auto;
   max-width: 1440px;
+  display: flex;
+  flex-direction: column;
 
   @media (min-width: 500px) {
     padding: 0 2rem;
@@ -62,12 +77,31 @@ export const StyledLabel = styled.label`
   display: flex;
   flex-direction: column;
 
-  @media (min-width: 750px) {
+  @media (min-width: 760px) {
     font-size: 1.7rem;
   }
   @media (min-width: 1000px) {
     font-size: 2.2rem;
   }
+`;
+
+export const StyledLinkLabel = styled.a<{ isActive: boolean }>`
+  cursor: pointer;
+  border-bottom: ${({ isActive }) => isActive && '1px solid rgb(106, 184, 139)'};
+  font-size: 1.2rem;
+  line-height: var(--headerHeight);
+
+  @media (min-width: 760px) {
+    font-size: 2rem;
+  }
+  @media (min-width: 1000px) {
+    font-size: 2.5rem;
+  }
+`;
+
+export const Nav = styled.div`
+  display: flex;
+  gap: 1rem;
 `;
 
 export const StyledUl = styled.ul`
@@ -105,7 +139,7 @@ export const Input = styled.input`
     background-color: rgb(106, 184, 139);
   }
 
-  @media (min-width: 750px) {
+  @media (min-width: 760px) {
     line-height: 2.2rem;
     font-size: 1.7rem;
   }
@@ -120,7 +154,7 @@ export const StyledHeader = styled.h1`
   text-align: center;
   font-size: 2.2rem;
 
-  @media (min-width: 750px) {
+  @media (min-width: 760px) {
     font-size: 3rem;
   }
   @media (min-width: 1000px) {
@@ -137,7 +171,7 @@ export const SubmitButton = styled.button<{ isValid: boolean }>`
   &:disabled {
     background-color: rgba(106, 184, 139, 0.4);
   }
-  @media (min-width: 750px) {
+  @media (min-width: 760px) {
     font-size: 1.7rem;
     line-height: 3.5rem;
   }
@@ -151,7 +185,7 @@ export const SubmitError = styled.p`
   color: var(--errorRed);
   font-size: 1.5rem;
   text-align: center;
-  @media (min-width: 750px) {
+  @media (min-width: 760px) {
     font-size: 1.7rem;
   }
   @media (min-width: 1000px) {
@@ -174,7 +208,7 @@ export const FieldError = styled.span`
   -webkit-line-clamp: 1;
   line-clamp: 1;
   -webkit-box-orient: vertical;
-  @media (min-width: 750px) {
+  @media (min-width: 760px) {
     --midMargin: calc(var(--baseMargin) * 1.5);
     font-size: var(--midSize);
     min-height: calc(var(--midSize) + var(--midMargin) * 2);

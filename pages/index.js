@@ -4,6 +4,14 @@ import { StyledHeader, StyledPage } from '../styles/globalstyles';
 import { useAuth } from '../hooks/useAuth';
 import useToken from '../hooks/useToken';
 
+// Check that transpiler is correctly set up
+if (
+  !new (class {
+    x;
+  })().hasOwnProperty('x')
+)
+  throw new Error('Transpiler is not configured correctly');
+
 export default function Home(props) {
   const currentUser = useAuth();
   useToken();

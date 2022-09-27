@@ -39,7 +39,7 @@ const Signin = () => {
 
   return (
     <StyledPage>
-      <Navbar></Navbar>
+      <Navbar />
       <StyledHeader>Log in</StyledHeader>
       <form onSubmit={handleSubmit} className='form_type_onboarding'>
         <StyledLabel>
