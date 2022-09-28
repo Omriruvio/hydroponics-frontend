@@ -14,6 +14,7 @@ export interface IUserContext extends UserData {
   isLoggedIn: boolean;
   isAdmin: boolean;
   systemId?: string | undefined;
+  token?: string | undefined;
   login: (user: UserAuth) => void;
   logout: () => void;
   register: (user: UserAuth) => void;
@@ -24,6 +25,7 @@ const UserContext = createContext<IUserContext>({
   phoneNumber: '',
   email: '',
   isAdmin: false,
+  token: '',
   login: () => {},
   logout: () => {},
   register: () => {},
@@ -37,8 +39,11 @@ export const UserDataProvider: FunctionComponent<PropsWithChildren> = ({ childre
   const [phoneNumber, setPhoneNumber] = useState<string | null>('');
   const [email, setEmail] = useState<string>('');
   const [isAdmin, setIsAdmin] = useState(false);
+  const [token, setToken] = useState<string | undefined>('');
   const login = useCallback((user: { email: string; phoneNumber?: string | null; isAdmin: boolean }) => {
     const { email, phoneNumber, isAdmin } = user;
+    const token = localStorage.getItem('jwt');
+    if (token) setToken(token);
     setEmail(email);
     setPhoneNumber(phoneNumber || null);
     setIsAdmin(isAdmin);
@@ -55,5 +60,5 @@ export const UserDataProvider: FunctionComponent<PropsWithChildren> = ({ childre
 
   const register = () => {};
 
-  return <UserContext.Provider value={{ register, login, logout, isLoggedIn, phoneNumber, email, isAdmin }}>{children}</UserContext.Provider>;
+  return <UserContext.Provider value={{ register, login, logout, isLoggedIn, phoneNumber, email, isAdmin, token }}>{children}</UserContext.Provider>;
 };

@@ -1,15 +1,11 @@
 import { useDropdown } from '../store/DropdownState';
 import { observer } from 'mobx-react-lite';
 import styled from 'styled-components';
-import { useAuth } from '../hooks/useAuth';
 import { useEffect, useRef } from 'react';
-import { StyledLinkLabel } from '../styles/globalstyles';
 
-const AccountDropdown = observer(() => {
-  const currentUser = useAuth();
+const SettingsDropdown = observer(() => {
   const dropdown = useDropdown();
 
-  // clicks outside of the dropdown should close it
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const current = dropdownRef.current as unknown as HTMLElement;
@@ -18,9 +14,18 @@ const AccountDropdown = observer(() => {
       }
     };
 
+    const handleEscKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        dropdown.toggle();
+      }
+    };
+
     document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleEscKey);
+
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleEscKey);
     };
   }, [dropdown]);
 
@@ -31,26 +36,51 @@ const AccountDropdown = observer(() => {
       <DropdownClose onClick={() => dropdown.toggle()}>X</DropdownClose>
       <DropdownContent>
         <DropdownItem>
-          <StyledLinkLabel isActive={false} href='/user-dashboard'>
+          <DropdownLabel isActive={false} href='/user-messages'>
+            Messages - view and edit
+          </DropdownLabel>
+        </DropdownItem>
+        {/* <DropdownItem>
+          <DropdownLabel isActive={false} href='/user-dashboard'>
             Dashboard
-          </StyledLinkLabel>
+          </DropdownLabel>
         </DropdownItem>
         <DropdownItem>
-          <StyledLinkLabel isActive={false} href='/user-dashboard'>
+          <DropdownLabel isActive={false} href='/user-settings'>
             Settings
-          </StyledLinkLabel>
+          </DropdownLabel>
         </DropdownItem>
         <DropdownItem>
-          <StyledLinkLabel isActive={false} onClick={currentUser.logout}>
+          <DropdownLabel isActive={false} onClick={currentUser.logout}>
             Logout
-          </StyledLinkLabel>
-        </DropdownItem>
+          </DropdownLabel>
+        </DropdownItem> */}
       </DropdownContent>
     </DropdownWrapper>
   );
 });
 
-export default AccountDropdown;
+export default SettingsDropdown;
+
+const DropdownLabel = styled.a<{ isActive: boolean }>`
+  cursor: pointer;
+  border-bottom: ${({ isActive }) => isActive && '1px solid rgb(106, 184, 139)'};
+  font-size: 1rem;
+  line-height: var(--headerHeight);
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    // fade out
+    opacity: 0.7;
+  }
+
+  @media (min-width: 760px) {
+    font-size: 1.7rem;
+  }
+  @media (min-width: 1000px) {
+    font-size: 2.2rem;
+  }
+`;
 
 const DropdownWrapper = styled.div`
   --dropdownPaddingVertical: 1rem;
@@ -87,12 +117,16 @@ const DropdownClose = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
+
+  &:hover {
+    opacity: 0.7;
+  }
 `;
 
 const DropdownContent = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.7rem;
 `;
 
 const DropdownItem = styled.div`

@@ -18,7 +18,7 @@ const GrowerCard: FunctionComponent<GrowerCardProps> = ({ grower, onSelectGrower
 
 const StyledGrowerCard = styled.li`
   cursor: pointer;
-  border: 1px solid rgb(46, 80, 60);
+  border: 1px solid var(--mainGreen);
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
   display: flex;

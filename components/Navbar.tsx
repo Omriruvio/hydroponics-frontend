@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { useAuth } from '../hooks/useAuth';
 import { observer } from 'mobx-react-lite';
 import { useDropdown } from '../store/DropdownState';
-import AccountDropdown from './AccountDropdown';
+import SettingsDropdown from './SettingsDropdown';
 import { StyledLinkLabel, Nav } from '../styles/globalstyles';
 
 const HeaderWrapper = styled.div`
@@ -59,7 +59,7 @@ const Navbar = () => {
           {/* Account link */}
           {currentUser.isLoggedIn && (
             <StyledLinkLabel onClick={() => dropdown?.toggle()} isActive={pathname === '/signin'}>
-              Account
+              Menu
             </StyledLinkLabel>
           )}
           {/* Log out link */}
@@ -77,7 +77,7 @@ const Navbar = () => {
             </Link>
           )}
         </Nav>
-        {dropdown.isOpen && <AccountDropdown />}
+        {dropdown.isOpen && <SettingsDropdown />}
       </HeaderWrapper>
     </>
   );

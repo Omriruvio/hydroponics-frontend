@@ -9,6 +9,7 @@ export const GlobalStyles = createGlobalStyle`
     --lightGreen: rgb(106,184,139);
     --headerHeight: 1.8rem;
     --headerPaddingTop: 2.5rem;
+    --brightGreen: rgb(106, 184, 139);
 
     @media (min-width: 760px) {
       --headerHeight: 2.6rem;
@@ -90,6 +91,12 @@ export const StyledLinkLabel = styled.a<{ isActive: boolean }>`
   border-bottom: ${({ isActive }) => isActive && '1px solid rgb(106, 184, 139)'};
   font-size: 1.2rem;
   line-height: var(--headerHeight);
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    // fade out
+    opacity: 0.7;
+  }
 
   @media (min-width: 760px) {
     font-size: 2rem;

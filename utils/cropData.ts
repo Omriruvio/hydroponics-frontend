@@ -24,3 +24,14 @@ export const getGrowers = (token: string) => {
     method: 'GET',
   }).then(handleResponse);
 };
+
+export const getUserMessages = (token: string) => {
+  return fetch(`${BASE_URL}/messages`, {
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: `Bearer ` + token,
+    },
+    method: 'GET',
+  }).then(handleResponse);
+};
+

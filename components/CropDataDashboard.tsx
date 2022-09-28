@@ -82,9 +82,9 @@ interface IImageDetailsProps {
 const ImageDetails = styled.div<IImageDetailsProps>`
   padding: 0.5rem;
   border-top: ${(props) =>
-    props.health?.isHealthy
+    props.health?.isHealthy === 'positive'
       ? 'var(--lightGreen) 10px solid'
-      : props.health?.hasPestPresence || props.health?.hasDeficiencies
+      : props.health?.hasPestPresence === 'positive' || props.health?.hasDeficiencies === 'positive'
       ? 'var(--errorRed) 10px solid'
       : 'transparent 10px solid'};
 `;
