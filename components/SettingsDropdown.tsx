@@ -33,7 +33,7 @@ const SettingsDropdown = observer(() => {
 
   return (
     <DropdownWrapper ref={dropdownRef}>
-      <DropdownClose onClick={() => dropdown.toggle()}>X</DropdownClose>
+      <DropdownClose onClick={() => dropdown.toggle()}>&times;</DropdownClose>
       <DropdownContent>
         <DropdownItem>
           <DropdownLabel isActive={false} href='/user-messages'>

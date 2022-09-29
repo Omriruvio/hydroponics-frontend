@@ -1,3 +1,4 @@
+import { MessageUpdateInputs } from '../components/CardEditPopup';
 import { BASE_URL } from '../config';
 import { handleResponse, IUserAuth } from './auth';
 
@@ -35,3 +36,13 @@ export const getUserMessages = (token: string) => {
   }).then(handleResponse);
 };
 
+export const sendUpdatedMessage = (token: string, message: MessageUpdateInputs) => {
+  return fetch(`${BASE_URL}/update-message`, {
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: `Bearer ` + token,
+    },
+    method: 'PUT',
+    body: JSON.stringify(message),
+  }).then(handleResponse);
+};

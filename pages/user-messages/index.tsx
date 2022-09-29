@@ -30,11 +30,21 @@ const UserMessagesPage: FunctionComponent = () => {
     }
   }, [userToken]);
 
+  const handleMessagesUpdate = (message: UserMessage) => {
+    const updatedMessages = messages.map((msg) => {
+      if (msg._id === message._id) return message;
+      return msg;
+    });
+    setMessages(updatedMessages);
+  };
+
   return (
     <>
       {currentUser.isLoggedIn && (
         <StyledPage>
-          {popups.isOpen.cardEditPopup && popups.selectedMessage && <CardEditPopup message={popups.selectedMessage}></CardEditPopup>}
+          {popups.isOpen.cardEditPopup && popups.selectedMessage && (
+            <CardEditPopup message={popups.selectedMessage} handleUpdate={handleMessagesUpdate}></CardEditPopup>
+          )}
           {popups.isOpen.cardDeletePopup && popups.selectedMessage && <CardDeletePopup message={popups.selectedMessage}></CardDeletePopup>}
           <Navbar />
           {messages.length > 0 && (
@@ -42,7 +52,7 @@ const UserMessagesPage: FunctionComponent = () => {
               <StyledHeader>My messages</StyledHeader>
               <MessageList>
                 {messages.reduceRight((acc: ReactElement[], message) => {
-                  acc.push(<MessageCard key={message._id} message={message} />);
+                  acc.push(<MessageCard key={message._id} message={message} preview={false} />);
                   return acc;
                 }, [])}
               </MessageList>

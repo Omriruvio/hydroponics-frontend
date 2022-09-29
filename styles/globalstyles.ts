@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
   :root {
+    --mainBackgroundColor: #171717;
+    --popupBackgroundColor: #171717;
     --errorRed: #a20000;
     --warningOrange: #E95B2D;
     --mainGreen: rgb(46, 80, 60);
@@ -34,6 +36,11 @@ export const GlobalStyles = createGlobalStyle`
     width: 100%;
     max-width: 400px;
     margin: auto;
+  }
+
+  body {
+    background-color: var(--mainBackgroundColor);
+    font-family: 'Roboto', sans-serif;
   }
 `;
 

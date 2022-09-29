@@ -8,6 +8,7 @@ import { UserMessage } from '../utils/parseCropData';
 
 interface MessageCardProps {
   message: UserMessage;
+  preview: boolean;
 }
 
 const getAssessmentText = (message: UserMessage) => {
@@ -35,7 +36,7 @@ const getDataText = (message: UserMessage) => {
   );
 };
 
-const MessageCard: FunctionComponent<MessageCardProps> = ({ message }) => {
+const MessageCard: FunctionComponent<MessageCardProps> = ({ message, preview }) => {
   const { width } = useWindowSize();
   const popups = usePopups();
 
@@ -51,15 +52,17 @@ const MessageCard: FunctionComponent<MessageCardProps> = ({ message }) => {
   // if the message is an image containing message:
   if (message.imageUrl) {
     return (
-      <StyledMessageCard message={message}>
-        <MessageCardOverlay>
-          <Button edit onClick={() => popups.handleEditMessage(message)}>
-            Edit
-          </Button>
-          <Button delete onClick={() => popups.handleDeleteMessage(message)}>
-            Delete
-          </Button>
-        </MessageCardOverlay>
+      <StyledMessageCard message={message} preview={preview}>
+        {!preview && (
+          <MessageCardOverlay preview={preview}>
+            <Button edit onClick={() => popups.handleEditMessage(message)}>
+              Edit
+            </Button>
+            <Button delete onClick={() => popups.handleDeleteMessage(message)}>
+              Delete
+            </Button>
+          </MessageCardOverlay>
+        )}
         <TextContainer>
           <MessageCardHeader>{formatMessageTime(message.dateReceived.toString())}</MessageCardHeader>
           <MessageCardHeader>System - {message.systemName}</MessageCardHeader>
@@ -77,15 +80,17 @@ const MessageCard: FunctionComponent<MessageCardProps> = ({ message }) => {
 
   // if the message is a text containing message:
   return (
-    <StyledMessageCard message={message}>
-      <MessageCardOverlay>
-        <Button edit onClick={() => popups.handleEditMessage(message)}>
-          Edit
-        </Button>
-        <Button delete onClick={() => popups.handleDeleteMessage(message)}>
-          Delete
-        </Button>
-      </MessageCardOverlay>
+    <StyledMessageCard message={message} preview={preview}>
+      {!preview && (
+        <MessageCardOverlay preview={preview}>
+          <Button edit onClick={() => popups.handleEditMessage(message)}>
+            Edit
+          </Button>
+          <Button delete onClick={() => popups.handleDeleteMessage(message)}>
+            Delete
+          </Button>
+        </MessageCardOverlay>
+      )}
       <TextContainer>
         <MessageCardHeader>{formatMessageTime(message.dateReceived.toString())}</MessageCardHeader>
         <MessageCardHeader>System - {message.systemName}</MessageCardHeader>
@@ -116,7 +121,7 @@ const Button = styled.button<{ edit?: boolean; delete?: boolean }>`
 `;
 
 // overlay that shows when the message is hovered for over 1 second and isplays an edit and delete buttons
-const MessageCardOverlay = styled.div`
+const MessageCardOverlay = styled.div<{ preview: Boolean }>`
   position: absolute;
   top: 0;
   right: 0;
@@ -128,7 +133,7 @@ const MessageCardOverlay = styled.div`
   align-items: flex-start;
   opacity: 0;
   transition: opacity var(--messageCardHoverTraisitionDelay) ease-in-out;
-  cursor: pointer;
+  cursor: ${({ preview }) => (preview ? 'default' : 'pointer')};
   z-index: 1;
 `;
 
@@ -147,9 +152,9 @@ const ImageContainer = styled.div`
   justify-content: center;
 `;
 
-const StyledMessageCard = styled.li<{ message: UserMessage }>`
+const StyledMessageCard = styled.li<{ message: UserMessage; preview?: boolean }>`
   position: relative;
-  cursor: pointer;
+  cursor: ${({ preview }) => (preview ? 'default' : 'pointer')};
   border: 1px solid var(--mainGreen);
   box-shadow: ${({ message }) => message.imageUrl && message.healthState.isHealthy === 'positive' && 'inset 0px 0px 15px 0px var(--lightGreen)'};
   box-shadow: ${({ message }) =>
@@ -166,7 +171,7 @@ const StyledMessageCard = styled.li<{ message: UserMessage }>`
   transition: border var(--messageCardHoverTraisitionDelay) ease-in-out;
 
   &:hover {
-    border: 1px solid rgb(106, 184, 139);
+    border: ${({ preview }) => !preview && '1px solid rgb(106, 184, 139)'};
     ${MessageCardOverlay} {
       opacity: 1;
     }

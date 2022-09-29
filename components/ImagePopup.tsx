@@ -8,7 +8,7 @@ const StyledOverlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1;
+  z-index: 2;
   top: 0;
   bottom: 0;
   left: 0;
@@ -33,7 +33,7 @@ const StyledImagePopup = styled.div`
     font-size: 50px;
     font-weight: bold;
     text-decoration: none;
-    color: #333;
+    color: inherit;
   }
 
   & button {

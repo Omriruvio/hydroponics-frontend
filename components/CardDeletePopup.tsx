@@ -8,7 +8,7 @@ const StyledOverlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1;
+  z-index: 2;
   top: 0;
   bottom: 0;
   left: 0;
@@ -33,7 +33,7 @@ const StyledImagePopup = styled.div`
     font-size: 50px;
     font-weight: bold;
     text-decoration: none;
-    color: #333;
+    color: inherit;
   }
 
   & button {
@@ -68,10 +68,10 @@ const CardDeletePopup: FunctionComponent<{ message: UserMessage }> = ({ message 
   }, [popups]);
 
   return (
-    <StyledOverlay onClick={() => popups.handleClose('cardEditPopup')}>
-      <StyledImagePopup className='popup'>
+    <StyledOverlay onClick={() => popups.handleClose('cardDeletePopup')}>
+      <StyledImagePopup>
         <>
-          <button onClick={() => popups.handleClose('cardEditPopup')} className='close'>
+          <button onClick={() => popups.handleClose('cardDeletePopup')} className='close'>
             &times;
           </button>
           <h1>DELETE CARD</h1>
