@@ -10,6 +10,7 @@ export const GlobalStyles = createGlobalStyle`
     --headerHeight: 1.8rem;
     --headerPaddingTop: 2.5rem;
     --brightGreen: rgb(106, 184, 139);
+    --messageCardHoverTraisitionDelay: 0.2s;
 
     @media (min-width: 760px) {
       --headerHeight: 2.6rem;

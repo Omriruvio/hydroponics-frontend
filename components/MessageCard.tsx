@@ -2,6 +2,7 @@ import moment from 'moment';
 import Image from 'next/image';
 import { FunctionComponent } from 'react';
 import styled from 'styled-components';
+import { usePopups } from '../hooks/usePopups';
 import useWindowSize from '../hooks/useWindowSize';
 import { UserMessage } from '../utils/parseCropData';
 
@@ -36,6 +37,7 @@ const getDataText = (message: UserMessage) => {
 
 const MessageCard: FunctionComponent<MessageCardProps> = ({ message }) => {
   const { width } = useWindowSize();
+  const popups = usePopups();
 
   const formatMessageTime = (date: string) => {
     // above 1000px render moment format as 'ddd, hA', below 1000px render as 'ddd, h:mmA'
@@ -50,6 +52,14 @@ const MessageCard: FunctionComponent<MessageCardProps> = ({ message }) => {
   if (message.imageUrl) {
     return (
       <StyledMessageCard message={message}>
+        <MessageCardOverlay>
+          <Button edit onClick={() => popups.handleEditMessage(message)}>
+            Edit
+          </Button>
+          <Button delete onClick={() => popups.handleDeleteMessage(message)}>
+            Delete
+          </Button>
+        </MessageCardOverlay>
         <TextContainer>
           <MessageCardHeader>{formatMessageTime(message.dateReceived.toString())}</MessageCardHeader>
           <MessageCardHeader>System - {message.systemName}</MessageCardHeader>
@@ -68,6 +78,14 @@ const MessageCard: FunctionComponent<MessageCardProps> = ({ message }) => {
   // if the message is a text containing message:
   return (
     <StyledMessageCard message={message}>
+      <MessageCardOverlay>
+        <Button edit onClick={() => popups.handleEditMessage(message)}>
+          Edit
+        </Button>
+        <Button delete onClick={() => popups.handleDeleteMessage(message)}>
+          Delete
+        </Button>
+      </MessageCardOverlay>
       <TextContainer>
         <MessageCardHeader>{formatMessageTime(message.dateReceived.toString())}</MessageCardHeader>
         <MessageCardHeader>System - {message.systemName}</MessageCardHeader>
@@ -76,6 +94,43 @@ const MessageCard: FunctionComponent<MessageCardProps> = ({ message }) => {
     </StyledMessageCard>
   );
 };
+
+// styled button that takes edit / delete as props and renders the appropriate button style
+const Button = styled.button<{ edit?: boolean; delete?: boolean }>`
+  background-color: ${(props) => (props.edit ? '#f2f2f2' : '#f2f2f2')};
+  border: 1px solid ${(props) => (props.edit ? '#f2f2f2' : '#f2f2f2')};
+  border-radius: 5px;
+  color: ${(props) => (props.edit ? '#000000' : '#000000')};
+  cursor: pointer;
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin: 0.5rem 0.5rem;
+  padding: 0.5rem 1rem;
+  transition: all var(--messageCardHoverTraisitionDelay) ease-in-out;
+
+  &:hover {
+    background-color: ${(props) => (props.edit ? 'var(--lightGreen)' : 'var(--warningOrange)')};
+    border: 1px solid ${(props) => (props.edit ? 'var(--lightGreen)' : 'var(--warningOrange)')};
+    color: ${(props) => (props.edit ? '#000000' : '#000000')};
+  }
+`;
+
+// overlay that shows when the message is hovered for over 1 second and isplays an edit and delete buttons
+const MessageCardOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  opacity: 0;
+  transition: opacity var(--messageCardHoverTraisitionDelay) ease-in-out;
+  cursor: pointer;
+  z-index: 1;
+`;
 
 const CropDataContainer = styled.div`
   margin-top: 1.5rem;
@@ -108,9 +163,13 @@ const StyledMessageCard = styled.li<{ message: UserMessage }>`
   justify-content: space-between;
   gap: 0.3rem;
   position: relative;
+  transition: border var(--messageCardHoverTraisitionDelay) ease-in-out;
 
   &:hover {
     border: 1px solid rgb(106, 184, 139);
+    ${MessageCardOverlay} {
+      opacity: 1;
+    }
   }
 
   @media (min-width: 500px) {

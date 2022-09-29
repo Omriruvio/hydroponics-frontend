@@ -8,10 +8,14 @@ import { UserMessage } from '../../utils/parseCropData';
 import { getUserMessages } from '../../utils/cropData';
 import MessageCard from '../../components/MessageCard';
 import styled from 'styled-components';
+import { usePopups } from '../../hooks/usePopups';
+import CardEditPopup from '../../components/CardEditPopup';
+import CardDeletePopup from '../../components/CardDeletePopup';
 
 const UserMessagesPage: FunctionComponent = () => {
   const userToken = useToken().userToken;
   const currentUser = useAuth();
+  const popups = usePopups();
 
   const [messages, setMessages] = useState<UserMessage[]>([]);
 
@@ -30,6 +34,8 @@ const UserMessagesPage: FunctionComponent = () => {
     <>
       {currentUser.isLoggedIn && (
         <StyledPage>
+          {popups.isOpen.cardEditPopup && popups.selectedMessage && <CardEditPopup message={popups.selectedMessage}></CardEditPopup>}
+          {popups.isOpen.cardDeletePopup && popups.selectedMessage && <CardDeletePopup message={popups.selectedMessage}></CardDeletePopup>}
           <Navbar />
           {messages.length > 0 && (
             <>
