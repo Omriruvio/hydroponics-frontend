@@ -38,6 +38,11 @@ const UserMessagesPage: FunctionComponent = () => {
     setMessages(updatedMessages);
   };
 
+  const handleDeleteMessage = (messageId: string) => {
+    const updatedMessages = messages.filter((msg) => msg._id !== messageId);
+    setMessages(updatedMessages);
+  };
+
   return (
     <>
       {currentUser.isLoggedIn && (
@@ -45,7 +50,9 @@ const UserMessagesPage: FunctionComponent = () => {
           {popups.isOpen.cardEditPopup && popups.selectedMessage && (
             <CardEditPopup message={popups.selectedMessage} handleUpdate={handleMessagesUpdate}></CardEditPopup>
           )}
-          {popups.isOpen.cardDeletePopup && popups.selectedMessage && <CardDeletePopup message={popups.selectedMessage}></CardDeletePopup>}
+          {popups.isOpen.cardDeletePopup && popups.selectedMessage && (
+            <CardDeletePopup message={popups.selectedMessage} handleDelete={handleDeleteMessage}></CardDeletePopup>
+          )}
           <Navbar />
           {messages.length > 0 && (
             <>

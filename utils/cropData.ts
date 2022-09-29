@@ -46,3 +46,14 @@ export const sendUpdatedMessage = (token: string, message: MessageUpdateInputs) 
     body: JSON.stringify(message),
   }).then(handleResponse);
 };
+
+export const sendDeleteMessage = (token: string, messageId: string) => {
+  return fetch(`${BASE_URL}/delete-message`, {
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: `Bearer ` + token,
+    },
+    method: 'DELETE',
+    body: JSON.stringify({ messageId }),
+  }).then(handleResponse);
+};

@@ -1,64 +1,43 @@
-import styled from 'styled-components';
 import { usePopups } from '../hooks/usePopups';
 import { FunctionComponent, useEffect } from 'react';
 import { UserMessage } from '../utils/parseCropData';
+import { StyledHeader, SubmitError } from '../styles/globalstyles';
+import { useInputsAndValidation } from '../hooks/useInputsAndValidation';
+import MessageCard from './MessageCard';
+import { sendDeleteMessage } from '../utils/cropData';
+import useToken from '../hooks/useToken';
+import { ConfirmButton, PopupWindow, StyledOverlay } from './CardEditPopup';
 
-const StyledOverlay = styled.div`
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.7);
-  transition: opacity 500ms;
-  /* visibility: hidden;
-  opacity: 0; */
-`;
+type CardDeletePopupProps = {
+  message: UserMessage;
+  handleDelete: (messageId: string) => void;
+};
 
-const StyledImagePopup = styled.div`
-  border-radius: 5px;
-  max-width: 80%;
-  position: relative;
-  transition: all 2s ease-in-out;
-
-  & .close {
-    position: absolute;
-    top: -75px;
-    right: -50px;
-    transition: all 200ms;
-    font-size: 50px;
-    font-weight: bold;
-    text-decoration: none;
-    color: inherit;
-  }
-
-  & button {
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-
-  @media screen and (max-width: 675px) {
-    & .close {
-      right: -10px;
-    }
-    max-width: 95%;
-  }
-
-  @media screen and (max-width: 550px) {
-    & .close {
-      font-size: 30px;
-      top: -45px;
-    }
-  }
-`;
-
-const CardDeletePopup: FunctionComponent<{ message: UserMessage }> = ({ message }) => {
+const CardDeletePopup: FunctionComponent<CardDeletePopupProps> = ({ message, handleDelete }) => {
   const popups = usePopups();
+  const currentUserToken = useToken().userToken;
+  const { submitError, setSubmitError } = useInputsAndValidation();
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const sendDelete = () => {
+      if (!currentUserToken) return;
+      sendDeleteMessage(currentUserToken, message._id)
+        .then(() => {
+          handleDelete(message._id);
+          popups.closeAll();
+        })
+        .catch((err) => {
+          console.log('Error updating message');
+          setSubmitError(err);
+        });
+    };
+
+    if (currentUserToken) {
+      sendDelete();
+    }
+  };
+
   useEffect(() => {
     const closeByEsc = (e: KeyboardEvent) => {
       e.key === 'Escape' && popups.closeAll();
@@ -69,16 +48,20 @@ const CardDeletePopup: FunctionComponent<{ message: UserMessage }> = ({ message 
 
   return (
     <StyledOverlay onClick={() => popups.handleClose('cardDeletePopup')}>
-      <StyledImagePopup>
-        <>
-          <button onClick={() => popups.handleClose('cardDeletePopup')} className='close'>
-            &times;
-          </button>
-          <h1>DELETE CARD</h1>
-          <div>{message._id}</div>
-          <div>{message.dateReceived.toString()}</div>
-        </>
-      </StyledImagePopup>
+      <PopupWindow onClick={(e) => e.stopPropagation()}>
+        <button onClick={() => popups.handleClose('cardDeletePopup')} className='close'>
+          &times;
+        </button>
+        <StyledHeader>Delete this card?</StyledHeader>
+        <h2>Card to be deleted:</h2>
+        <MessageCard message={message} preview={true} />
+        <form onSubmit={handleSubmit} className='form_type_onboarding'>
+          {submitError && <SubmitError>{submitError}</SubmitError>}
+          <ConfirmButton isValid={true} type='submit'>
+            DELETE CARD
+          </ConfirmButton>
+        </form>
+      </PopupWindow>
     </StyledOverlay>
   );
 };

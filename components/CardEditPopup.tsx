@@ -30,6 +30,7 @@ const CardEditPopup: FunctionComponent<CardEditPopupProps> = ({ message, handleU
   const userSystems = useSystems();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const sendUpdate = () => {
       if (!currentUserToken) return;
       sendUpdatedMessage(currentUserToken, { ...editInputs, _id: message._id })
@@ -44,7 +45,6 @@ const CardEditPopup: FunctionComponent<CardEditPopupProps> = ({ message, handleU
     };
 
     if (isValid && currentUserToken) {
-      e.preventDefault();
       sendUpdate();
     }
   };
@@ -59,7 +59,7 @@ const CardEditPopup: FunctionComponent<CardEditPopupProps> = ({ message, handleU
 
   return (
     <StyledOverlay onClick={() => popups.handleClose('cardEditPopup')}>
-      <EditPopup onClick={(e) => e.stopPropagation()}>
+      <PopupWindow onClick={(e) => e.stopPropagation()}>
         <button onClick={() => popups.handleClose('cardEditPopup')} className='close'>
           &times;
         </button>
@@ -106,7 +106,7 @@ const CardEditPopup: FunctionComponent<CardEditPopupProps> = ({ message, handleU
             Confirm Edits
           </ConfirmButton>
         </form>
-      </EditPopup>
+      </PopupWindow>
     </StyledOverlay>
   );
 };
@@ -146,7 +146,7 @@ export const ConfirmButton = styled.button<{ isValid: boolean }>`
   }
 `;
 
-const StyledOverlay = styled.div`
+export const StyledOverlay = styled.div`
   position: fixed;
   display: flex;
   justify-content: center;
@@ -162,7 +162,7 @@ const StyledOverlay = styled.div`
   opacity: 0; */
 `;
 
-const EditPopup = styled.div`
+export const PopupWindow = styled.div`
   background-color: var(--popupBackgroundColor);
   border: 1px solid white;
   padding: 3rem;
