@@ -56,8 +56,8 @@ const Navbar = () => {
               <StyledLinkLabel isActive={pathname === '/signin'}>Login</StyledLinkLabel>
             </Link>
           )}
-          {/* Account link */}
-          {currentUser.isLoggedIn && (
+          {/* Account menu & settings link */}
+          {!currentUser.isAdmin && currentUser.isLoggedIn && (
             <StyledLinkLabel onClick={() => dropdown?.toggle()} isActive={pathname === '/signin'}>
               Menu
             </StyledLinkLabel>

@@ -133,16 +133,24 @@ export const ConfirmButton = styled.button<{ isValid: boolean }>`
   margin-top: 15px;
   line-height: 2.5rem;
   background-color: ${({ isValid }) => isValid && 'rgb(106, 184, 139)'};
+  transition: all 0.2s ease-in-out;
+
   &:disabled {
     background-color: rgba(106, 184, 139, 0.4);
   }
+
+  &:hover:not(:disabled) {
+    background-color: var(--lightGreen);
+    opacity: 0.8;
+  }
+
   @media (min-width: 760px) {
     font-size: 1.7rem;
     line-height: 3.5rem;
   }
   @media (min-width: 1000px) {
-    font-size: 2.5rem;
-    line-height: 4.5rem;
+    font-size: 2.1rem;
+    line-height: 4rem;
   }
 `;
 

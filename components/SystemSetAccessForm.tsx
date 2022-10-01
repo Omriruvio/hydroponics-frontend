@@ -10,16 +10,14 @@ import { observer } from 'mobx-react-lite';
 import { StyledLabel } from '../styles/globalstyles';
 import { ConfirmButton } from './CardEditPopup';
 
-const StyledForm = styled.form`
+export const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   margin: 0 auto;
   gap: 1rem;
-  width: 100%;
-  max-width: 500px;
   padding: 1rem;
+  width: calc(100vw - 2rem);
+  max-width: 500px;
   border: 1px solid var(--mainGreen);
   border-radius: 0.5rem;
   background-color: var(--mainWhite);
@@ -51,30 +49,25 @@ const StyledRadioContainer = styled.div`
 `;
 
 const StyledRadio = styled.input`
-  width: 1rem;
-  height: 1rem;
+  width: 2rem;
+  height: 2rem;
   border: 1px solid var(--mainGreen);
   border-radius: 50%;
   background-color: var(--mainWhite);
-  box-shadow: 0 0 0.5rem 0.1rem var(--mainGreen);
-  font-size: 1rem;
+  font-size: 2rem;
   font-family: inherit;
   color: var(--mainGreen);
   outline: none;
   transition: all 0.2s ease-in-out;
-
-  &:focus {
-    box-shadow: 0 0 0.5rem 0.1rem var(--mainGreen);
-  }
 `;
 
 const StyledRadioLabel = styled.label`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 1rem;
+  font-size: 1.5rem;
   font-family: inherit;
-  color: var(--mainGreen);
+  color: var(--mainWhite);
   outline: none;
   transition: all 0.2s ease-in-out;
 

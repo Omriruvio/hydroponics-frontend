@@ -1,13 +1,14 @@
 import Navbar from '../../components/Navbar';
 import { FunctionComponent } from 'react';
-import { StyledHeader, StyledPage, StyledUl } from '../../styles/globalstyles';
+import { OpaqueDivider, StyledDivider, StyledHeader, StyledPage, StyledUl } from '../../styles/globalstyles';
 import { useAuth } from '../../hooks/useAuth';
 import useSystems from '../../hooks/useSystems';
-import SystemCard from '../../components/SystemCard';
+import SystemCard, { SystemCardHeader, SystemDetails } from '../../components/SystemCard';
 import { observer } from 'mobx-react-lite';
 import useToken from '../../hooks/useToken';
 import SystemEditForm from '../../components/SystemEditForm';
 import SystemSetAccessForm from '../../components/SystemSetAccessForm';
+import styled from 'styled-components';
 
 const UserSystems: FunctionComponent = () => {
   useToken();
@@ -51,14 +52,20 @@ const UserSystems: FunctionComponent = () => {
               </StyledUl>
             </>
           )}
+          <StyledDivider />
           {selectedSystem && (
             <>
-              <h1>System details</h1>
-              <p>System name: {selectedSystem.name}</p>
-              <p>System owner: {selectedSystem.ownerName}</p>
-              <p>{`System type: ${selectedSystem.isPublic ? 'Public' : 'Private'}`}</p>
-              <p>Collaborators: {selectedSystem.users.length}</p>
+              <SystemCardHeader>Selected system details:</SystemCardHeader>
+              <SystemDetailsWrapper>
+                <SystemDetails>System name: {selectedSystem.name}</SystemDetails>
+                <SystemDetails>System owner: {selectedSystem.ownerName}</SystemDetails>
+                <SystemDetails>{`System access: ${selectedSystem.isPublic ? 'Public' : 'Private'}`}</SystemDetails>
+                <SystemDetails>Collaborators: {selectedSystem.users.length}</SystemDetails>
+              </SystemDetailsWrapper>
+              <StyledDivider />
+              <StyledHeader>Edit system - {selectedSystem.name}</StyledHeader>
               <SystemEditForm system={selectedSystem} onRename={handleRename} />
+              <OpaqueDivider />
               <SystemSetAccessForm system={selectedSystem} onSetAccess={handleSetAccess} />
             </>
           )}
@@ -68,4 +75,14 @@ const UserSystems: FunctionComponent = () => {
   );
 };
 
+const SystemDetailsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-left: 3rem;
+  /* align-items: center; */
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+`;
+  
 export default observer(UserSystems);

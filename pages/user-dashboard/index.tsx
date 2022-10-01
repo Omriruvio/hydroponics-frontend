@@ -1,6 +1,6 @@
 import Navbar from '../../components/Navbar';
 import { FunctionComponent, useEffect } from 'react';
-import { StyledHeader, StyledPage, StyledUl } from '../../styles/globalstyles';
+import { StyledDivider, StyledHeader, StyledPage, StyledUl } from '../../styles/globalstyles';
 import { useAuth } from '../../hooks/useAuth';
 import Router from 'next/router';
 import CropDataDashboard from '../../components/CropDataDashboard';
@@ -38,7 +38,12 @@ const UserDashboard: FunctionComponent = () => {
               </StyledUl>
             </>
           )}
-          {selectedSystem && <CropDataDashboard currentUser={currentUser} selectedSystem={selectedSystem}></CropDataDashboard>}
+          {selectedSystem && (
+            <>
+              <StyledDivider />
+              <CropDataDashboard currentUser={currentUser} selectedSystem={selectedSystem}></CropDataDashboard>
+            </>
+          )}
         </StyledPage>
       )}
     </>

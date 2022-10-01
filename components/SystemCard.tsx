@@ -43,7 +43,7 @@ const StyledSystemCard = styled.li`
     padding: 1.3rem 2rem;
   }
 `;
-const SystemCardHeader = styled.h3`
+export const SystemCardHeader = styled.h3`
   font-size: 1.2rem;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -59,7 +59,7 @@ const SystemCardHeader = styled.h3`
     font-size: 1.9rem;
   }
 `;
-const SystemDetails = styled.p`
+export const SystemDetails = styled.p`
   font-size: 1.1rem;
   overflow: hidden;
   text-overflow: ellipsis;

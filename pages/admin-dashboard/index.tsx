@@ -8,7 +8,7 @@ import { useAuth } from '../../hooks/useAuth';
 import useGrowers, { Grower } from '../../hooks/useGrowers';
 import { usePopups } from '../../hooks/usePopups';
 import useSystems from '../../hooks/useSystems';
-import { StyledHeader, StyledPage, StyledUl } from '../../styles/globalstyles';
+import { StyledDivider, StyledHeader, StyledPage, StyledUl } from '../../styles/globalstyles';
 
 const AdminDashboard = () => {
   const currentUser = useAuth();
@@ -44,6 +44,7 @@ const AdminDashboard = () => {
             <GrowerCard key={grower._id} grower={grower} onSelectGrower={setSelectedGrower} />
           ))}
         </StyledUl>
+        <StyledDivider />
         {selectedGrower && selectedSystem ? (
           <CropDataDashboard isDisplayName={true} currentUser={selectedGrower} selectedSystem={selectedSystem} />
         ) : (

@@ -5,6 +5,7 @@ import useSystems, { System } from '../hooks/useSystems';
 import useToken from '../hooks/useToken';
 import { FieldError, Input, StyledLabel, SubmitError } from '../styles/globalstyles';
 import { ConfirmButton } from './CardEditPopup';
+import { StyledForm } from './SystemSetAccessForm';
 
 interface SystemEditFormProps {
   system: System;
@@ -32,8 +33,7 @@ const SystemEditForm: FunctionComponent<SystemEditFormProps> = observer(({ syste
 
   return (
     <>
-      <h1>Edit system details</h1>
-      <form onSubmit={handleSubmit} className='form_type_onboarding'>
+      <StyledForm onSubmit={handleSubmit}>
         <StyledLabel>
           Rename system
           <Input name='systemName' value={inputs.systemName || ''} minLength={2} onChange={handleChange} type='string' required></Input>
@@ -43,7 +43,7 @@ const SystemEditForm: FunctionComponent<SystemEditFormProps> = observer(({ syste
         <ConfirmButton disabled={!isValid} isValid={isValid} type='submit'>
           Update system name
         </ConfirmButton>
-      </form>
+      </StyledForm>
     </>
   );
 });

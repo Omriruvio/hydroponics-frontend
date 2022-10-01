@@ -13,6 +13,7 @@ export const GlobalStyles = createGlobalStyle`
     --headerPaddingTop: 2.5rem;
     --brightGreen: rgb(106, 184, 139);
     --messageCardHoverTraisitionDelay: 0.2s;
+    --mainGray: #e0e0e020;
 
     @media (min-width: 760px) {
       --headerHeight: 2.6rem;
@@ -175,6 +176,17 @@ export const StyledHeader = styled.h1`
   @media (min-width: 1000px) {
     font-size: 3.5rem;
   }
+`;
+
+export const StyledDivider = styled.hr`
+  border: 1px solid var(--mainGray);
+  margin: 1rem 0;
+`;
+
+export const OpaqueDivider = styled.hr`
+  margin: 1rem 0;
+  border: 1px solid var(--mainGray);
+  opacity: 0;
 `;
 
 export const SubmitButton = styled.button<{ isValid: boolean }>`

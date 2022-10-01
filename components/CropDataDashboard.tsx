@@ -6,7 +6,7 @@ import { useCropData } from '../hooks/useCropData';
 import { Grower } from '../hooks/useGrowers';
 import { usePopups } from '../hooks/usePopups';
 import { System } from '../hooks/useSystems';
-import { StyledHeader } from '../styles/globalstyles';
+import { StyledDivider, StyledHeader } from '../styles/globalstyles';
 import { HealthState, ImageData } from '../utils/parseCropData';
 import ChartRangePicker from './ChartRangePicker';
 import { DataBreakdown } from './DataBreakdown';
@@ -34,8 +34,10 @@ const CropDataDashboard: FunctionComponent<ICropDataDashboardProps> = ({ current
       {/* Combined chart currently commented out */}
       {/* <UserChart chartData={mainChartData} daysDisplayed={chartRange}></UserChart> */}
       <DataBreakdown chartData={mainChartData} daysDisplayed={chartRange} />
+
       {imageData.length > 0 && (
         <>
+          <StyledDivider />
           <StyledHeader>Image Uploads</StyledHeader>
           <StyledUl>
             {(imageData as ImageData[]).reduceRight((acc: JSX.Element[], { _id, imageUrl, dateReceived, healthState }: ImageData) => {
