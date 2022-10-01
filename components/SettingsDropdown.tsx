@@ -40,6 +40,11 @@ const SettingsDropdown = observer(() => {
             Messages - view and edit
           </DropdownLabel>
         </DropdownItem>
+        <DropdownItem>
+          <DropdownLabel isActive={false} href='/user-systems'>
+            Systems
+          </DropdownLabel>
+        </DropdownItem>
         {/* <DropdownItem>
           <DropdownLabel isActive={false} href='/user-dashboard'>
             Dashboard

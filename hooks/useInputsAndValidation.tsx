@@ -16,7 +16,7 @@ export function useInputsAndValidation() {
 
   const resetForm = useCallback(
     (newInputs = {}, newErrors = {}, newIsValid = false) => {
-      setInputs(newInputs), setErrors(newErrors), setIsValid(newIsValid);
+      setInputs(newInputs), setErrors(newErrors), setIsValid(newIsValid), setSubmitError(null);
     },
     [setInputs, setErrors, setIsValid]
   );

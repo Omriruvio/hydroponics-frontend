@@ -11,7 +11,7 @@ interface SystemCardProps {
 const SystemCard: FunctionComponent<SystemCardProps> = ({ system, onSelectSystem }) => {
   return (
     <StyledSystemCard onClick={() => onSelectSystem(system)}>
-      <SystemCardHeader>{system.name}</SystemCardHeader>
+      <SystemCardHeader>{`${system.name} - ${system.isPublic ? 'public' : 'private'}`}</SystemCardHeader>
       <SystemDetails>Owner - {system.ownerName}</SystemDetails>
       <SystemDetails>Updated - {moment(system.dateModified).format('ddd, hA')}</SystemDetails>
       {/* <SystemDetails>Owner number - {system.ownerPhoneNumber.match(/\d+/)}</SystemDetails> */}
@@ -47,7 +47,7 @@ const SystemCardHeader = styled.h3`
   font-size: 1.2rem;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0;
+  margin: 0 0 1rem;
 
   @media (min-width: 500px) {
     font-size: 1.4rem;

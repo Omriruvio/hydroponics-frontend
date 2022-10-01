@@ -107,7 +107,7 @@ const Button = styled.button<{ edit?: boolean; delete?: boolean }>`
   border-radius: 5px;
   color: ${(props) => (props.edit ? '#000000' : '#000000')};
   cursor: pointer;
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   font-weight: 600;
   margin: 0.5rem 0.5rem;
   padding: 0.5rem 1rem;

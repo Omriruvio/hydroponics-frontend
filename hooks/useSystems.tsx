@@ -21,8 +21,30 @@ const useSystems = () => {
   const [selectedSystem, setSelectedSystem] = useState<System | null>(null);
   const { phoneNumber, isLoggedIn } = useAuth();
 
-  const setSelectSystem = useCallback((system: System) => {
+  const setSelectSystem = useCallback((system: System | null) => {
     setSelectedSystem(system);
+  }, []);
+
+  const sendRenameRequest = useCallback(async (userToken: string, systemId: string, newName: string) => {
+    return fetch(`${BASE_URL}/system/${systemId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${userToken}`,
+      },
+      body: JSON.stringify({ systemName: newName }),
+    }).then(async (res) => (res.ok ? res.json() : Promise.reject(await res.json())));
+  }, []);
+
+  const setSystemAccess = useCallback(async (userToken: string, systemId: string, isPublic: boolean) => {
+    return fetch(`${BASE_URL}/system/set-access/${systemId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${userToken}`,
+      },
+      body: JSON.stringify({ isPublic }),
+    }).then(async (res) => (res.ok ? res.json() : Promise.reject(await res.json())));
   }, []);
 
   useEffect(() => {
@@ -43,7 +65,7 @@ const useSystems = () => {
     isLoggedIn && phoneNumber && fetchSystems();
   }, [phoneNumber, isLoggedIn]);
 
-  return { data, selectedSystem, setSelectSystem };
+  return { data, setData, selectedSystem, setSelectSystem, sendRenameRequest, setSystemAccess };
 };
 
 export default useSystems;

@@ -100,7 +100,7 @@ const CardEditPopup: FunctionComponent<CardEditPopupProps> = ({ message, handleU
               ))}
             </Select>
           </StyledLabel>
-          <FieldError>{errors.temperature}</FieldError>
+          <FieldError>{errors.systemName}</FieldError>
           {submitError && <SubmitError>{submitError}</SubmitError>}
           <ConfirmButton disabled={!isValid} isValid={isValid} type='submit'>
             Confirm Edits
