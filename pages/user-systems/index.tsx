@@ -9,6 +9,7 @@ import useToken from '../../hooks/useToken';
 import SystemEditForm from '../../components/SystemEditForm';
 import SystemSetAccessForm from '../../components/SystemSetAccessForm';
 import styled from 'styled-components';
+import SystemCreateForm from '../../components/SystemCreateForm';
 
 const UserSystems: FunctionComponent = () => {
   useToken();
@@ -67,6 +68,8 @@ const UserSystems: FunctionComponent = () => {
               <SystemEditForm system={selectedSystem} onRename={handleRename} />
               <OpaqueDivider />
               <SystemSetAccessForm system={selectedSystem} onSetAccess={handleSetAccess} />
+              <OpaqueDivider />
+              <SystemCreateForm />
             </>
           )}
         </StyledPage>

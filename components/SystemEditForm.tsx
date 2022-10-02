@@ -3,9 +3,8 @@ import { FunctionComponent } from 'react';
 import { useInputsAndValidation } from '../hooks/useInputsAndValidation';
 import useSystems, { System } from '../hooks/useSystems';
 import useToken from '../hooks/useToken';
-import { FieldError, Input, StyledLabel, SubmitError } from '../styles/globalstyles';
+import { FieldError, Input, StyledForm, StyledLabel, SubmitError } from '../styles/globalstyles';
 import { ConfirmButton } from './CardEditPopup';
-import { StyledForm } from './SystemSetAccessForm';
 
 interface SystemEditFormProps {
   system: System;
