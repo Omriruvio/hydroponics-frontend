@@ -2,7 +2,7 @@ import Navbar from '../../components/Navbar';
 import { FunctionComponent } from 'react';
 import { OpaqueDivider, StyledDivider, StyledHeader, StyledPage, StyledUl } from '../../styles/globalstyles';
 import { useAuth } from '../../hooks/useAuth';
-import useSystems from '../../hooks/useSystems';
+import useSystems, { System } from '../../hooks/useSystems';
 import SystemCard, { SystemCardHeader, SystemDetails } from '../../components/SystemCard';
 import { observer } from 'mobx-react-lite';
 import useToken from '../../hooks/useToken';
@@ -38,6 +38,10 @@ const UserSystems: FunctionComponent = () => {
     setSelectSystem(null);
   };
 
+  const handleCreateSystem = (newSystem: System) => {
+    setSystems([...systems, newSystem]);
+  };
+
   return (
     <>
       {currentUser.isLoggedIn && (
@@ -69,7 +73,7 @@ const UserSystems: FunctionComponent = () => {
               <OpaqueDivider />
               <SystemSetAccessForm system={selectedSystem} onSetAccess={handleSetAccess} />
               <OpaqueDivider />
-              <SystemCreateForm />
+              <SystemCreateForm onSystemCreated={handleCreateSystem} />
             </>
           )}
         </StyledPage>
