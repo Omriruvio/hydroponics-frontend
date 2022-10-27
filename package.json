@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/material": "^5.10.11",
     "@types/recharts": "^1.8.23",
     "chart.js": "^3.8.0",
     "lodash.debounce": "^4.0.8",

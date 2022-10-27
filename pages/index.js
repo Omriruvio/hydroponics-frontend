@@ -3,6 +3,8 @@ import Navbar from '../components/Navbar';
 import { StyledHeader, StyledPage } from '../styles/globalstyles';
 import { useAuth } from '../hooks/useAuth';
 import useToken from '../hooks/useToken';
+import { GlobalSummary } from '../components/GlobalSummary';
+import { BASE_URL } from '../config';
 
 // Check that transpiler is correctly set up
 if (
@@ -24,7 +26,18 @@ export default function Home(props) {
         </Head>
         <Navbar />
         <StyledHeader>Welcome to Hydroponics!</StyledHeader>
+        <GlobalSummary {...props} />
       </StyledPage>
     )
   );
+}
+
+export async function getServerSideProps() {
+  const res = await fetch(`${BASE_URL}/active-user-count`);
+  const activeUserCount = await res.json();
+  return {
+    props: {
+      activeUserCount,
+    },
+  };
 }
