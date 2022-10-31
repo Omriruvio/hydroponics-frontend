@@ -62,7 +62,7 @@ const GlobalSummary: React.FC<{ activeUserCount: { activeUsers: number } }> = ({
         spacing={2}
       />
       <BasicGrid
-        data={photoMessages.reduceRight((acc, photo) => {
+        data={photoMessages.reduce((acc, photo) => {
           if (!photo.imageUrl) return acc;
           acc.push(
             <Image
