@@ -5,6 +5,8 @@ import { useAuth } from '../hooks/useAuth';
 import useToken from '../hooks/useToken';
 import { GlobalSummary } from '../components/GlobalSummary';
 import { BASE_URL } from '../config';
+import { usePopups } from '../hooks/usePopups';
+import ImagePopup from '../components/ImagePopup';
 
 // Check that transpiler is correctly set up
 if (
@@ -16,11 +18,13 @@ if (
 
 export default function Home(props) {
   const currentUser = useAuth();
+  const popups = usePopups();
   useToken();
 
   return (
     currentUser.isLoggedIn && (
       <StyledPage>
+        {popups.isOpen.imagePopup && <ImagePopup></ImagePopup>}
         <Head>
           <title>Hydroponics Dashboard</title>
         </Head>

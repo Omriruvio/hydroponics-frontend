@@ -18,7 +18,7 @@ export const MainLogo = () => {
     <LogoWrapper>
       <Link href='/' passHref>
         <a>
-          <Image layout='responsive' width={'355px'} height={'50px'} src='/hydroponics-logowebp.webp' alt='Hydroponics logo'></Image>
+          <Image layout='responsive' width={'355px'} height={'50px'} src='/hydroponics-logowebp.webp' alt='Hydroponics logo' priority></Image>
         </a>
       </Link>
     </LogoWrapper>

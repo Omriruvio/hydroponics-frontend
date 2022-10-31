@@ -12,11 +12,17 @@ const Item = styled(Paper)(({ theme }) => ({
   color: 'inherit',
 }));
 
-const BasicGrid: React.FC<any> = ({ data, spacing = 2, xs = 4 }) => {
+export type BasicGridProps = {
+  data: React.ReactNode[];
+  xs: number;
+  spacing: number;
+};
+
+const BasicGrid: React.FC<BasicGridProps> = ({ data, xs, spacing }) => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={spacing}>
-        {(data as any[]).map((item, index) => (
+        {data.map((item, index) => (
           <Grid xs={xs} key={index} component={Item}>
             <Item>{item}</Item>
           </Grid>

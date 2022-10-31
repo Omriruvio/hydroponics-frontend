@@ -3,6 +3,7 @@ import { Chip, Stack } from '@mui/material';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { BASE_URL } from '../config';
+import { usePopups } from '../hooks/usePopups';
 import { UserMessage } from '../utils/parseCropData';
 import BasicGrid from './BasicGrid';
 
@@ -14,6 +15,7 @@ interface Metrics {
 const GlobalSummary: React.FC<{ activeUserCount: { activeUsers: number } }> = ({ activeUserCount }) => {
   const [photoMessages, setPhotoMessages] = useState<UserMessage[]>([]);
   const [averageMetrics, setAverageMetrics] = useState<Metrics>({});
+  const popups = usePopups();
   useEffect(() => {
     const getLatestPhotos = async () => {
       // /last-x-photo-messages
@@ -21,7 +23,7 @@ const GlobalSummary: React.FC<{ activeUserCount: { activeUsers: number } }> = ({
       const photos = await res.json();
       const arrayOfImageElements = photos.map((photo: UserMessage) => {
         if (!photo.imageUrl) return;
-        return <Image key={photo._id} layout='responsive' objectFit='cover' src={photo.imageUrl} alt='latest photo' width={1600} height={900} />;
+        return photo;
       });
       setPhotoMessages(arrayOfImageElements);
     };
@@ -59,7 +61,26 @@ const GlobalSummary: React.FC<{ activeUserCount: { activeUsers: number } }> = ({
         xs={12}
         spacing={2}
       />
-      <BasicGrid data={photoMessages} />
+      <BasicGrid
+        data={photoMessages.reduceRight((acc, photo) => {
+          if (!photo.imageUrl) return acc;
+          acc.push(
+            <Image
+              key={photo._id}
+              layout='responsive'
+              objectFit='cover'
+              src={photo.imageUrl}
+              alt='latest photo'
+              width={1600}
+              height={900}
+              onClick={() => popups.handleSelectImage(photo.imageUrl!)}
+            />
+          );
+          return acc;
+        }, [] as React.ReactNode[])}
+        xs={4}
+        spacing={2}
+      />
     </>
   );
 };

@@ -14,11 +14,11 @@ export const NORMAL_DATA_RANGE_METRIC = {
 };
 
 // maximum days to show in the graphs
-export const MAX_CHART_DAYS = 28;
+export const MAX_CHART_DAYS = 360;
 // minimum days to show in the graphs
-export const MIN_CHART_DAYS = 7;
+export const MIN_CHART_DAYS = 30;
 // range picker step size
-export const RANGE_STEP_SIZE = 7;
+export const RANGE_STEP_SIZE = 30;
 // range picker debounce time in ms
 export const RANGE_PICKER_DEBOUNCE_DELAY_MS = 500;
 // default chart margins
