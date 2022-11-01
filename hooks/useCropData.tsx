@@ -14,7 +14,10 @@ export const useCropData = (selectedUser: UserData | Grower | null, systemId: st
   const currentUser = useAuth();
 
   const updateCharts = useCallback((data: unknown) => {
-    if (Array.isArray(data)) {
+    if (!data || !Array.isArray(data)) {
+      setMainChartData([]);
+      setImageData([]);
+    } else {
       setImageData(parseImages(data));
       setMainChartData(parseCropData(data));
     }

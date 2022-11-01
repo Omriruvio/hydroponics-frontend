@@ -1,6 +1,6 @@
 import Navbar from '../../components/Navbar';
 import { FunctionComponent, ReactElement, useEffect, useState } from 'react';
-import { StyledHeader, StyledPage } from '../../styles/globalstyles';
+import { StyledHeader, StyledPage, StyledSubHeader } from '../../styles/globalstyles';
 import { useAuth } from '../../hooks/useAuth';
 import { observer } from 'mobx-react-lite';
 import useToken from '../../hooks/useToken';
@@ -65,7 +65,7 @@ const UserMessagesPage: FunctionComponent = () => {
               </MessageList>
             </>
           ) : (
-            <StyledHeader>You have no messages yet.</StyledHeader>
+            <StyledSubHeader>You have no messages yet.</StyledSubHeader>
           )}
         </StyledPage>
       )}

@@ -13,6 +13,7 @@ export interface Grower {
   lastReceivedPush: Date;
   username: string;
   defaultSystem?: string;
+  systems: string[];
 }
 
 export interface SupervisorGrowersData {

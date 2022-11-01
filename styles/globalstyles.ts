@@ -178,6 +178,12 @@ export const StyledHeader = styled.h1`
   }
 `;
 
+export const StyledSubHeader = styled.h2`
+  margin: 2rem 0;
+  text-align: center;
+  font-size: 1.7rem;
+`;
+
 export const StyledDivider = styled.hr`
   border: 1px solid var(--mainGray);
   margin: 1rem 0;
