@@ -22,17 +22,15 @@ export default function Home(props) {
   useToken();
 
   return (
-    currentUser.isLoggedIn && (
-      <StyledPage>
-        {popups.isOpen.imagePopup && <ImagePopup></ImagePopup>}
-        <Head>
-          <title>Hydroponics Dashboard</title>
-        </Head>
-        <Navbar />
-        <StyledHeader>Welcome to Hydroponics!</StyledHeader>
-        <GlobalSummary {...props} />
-      </StyledPage>
-    )
+    <StyledPage>
+      {popups.isOpen.imagePopup && <ImagePopup></ImagePopup>}
+      <Head>
+        <title>Hydroponics Dashboard</title>
+      </Head>
+      <Navbar />
+      <StyledHeader>Welcome to Hydroponics!</StyledHeader>
+      <GlobalSummary {...props} />
+    </StyledPage>
   );
 }
 

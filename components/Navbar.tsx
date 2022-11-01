@@ -33,11 +33,9 @@ const Navbar = () => {
         <MainLogo />
         <Nav>
           {/* Home link */}
-          {currentUser.isLoggedIn && (
-            <Link href='/' passHref>
-              <StyledLinkLabel isActive={pathname === '/'}>Home</StyledLinkLabel>
-            </Link>
-          )}
+          <Link href='/' passHref>
+            <StyledLinkLabel isActive={pathname === '/'}>Home</StyledLinkLabel>
+          </Link>
           {/* User dashboard link */}
           {!currentUser.isAdmin && currentUser.isLoggedIn && (
             <Link href='/user-dashboard' passHref>

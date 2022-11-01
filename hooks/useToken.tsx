@@ -40,7 +40,7 @@ const useToken = () => {
           setUserToken(null);
           router.replace('/user-signin');
         });
-    } else if (!currentUser.isLoggedIn) router.replace('/signin');
+    }
   }, [router, currentUser]);
 
   return { userToken, adminToken };
