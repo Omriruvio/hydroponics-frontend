@@ -28,7 +28,7 @@ const UserDashboard: FunctionComponent = () => {
         <StyledPage>
           {popups.isOpen.imagePopup && <ImagePopup></ImagePopup>}
           <Navbar />
-          {systems.length > 0 && (
+          {systems?.length > 0 && (
             <>
               <StyledHeader>My systems</StyledHeader>
               <StyledUl>

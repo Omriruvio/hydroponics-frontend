@@ -54,7 +54,7 @@ const UserMessagesPage: FunctionComponent = () => {
             <CardDeletePopup message={popups.selectedMessage} handleDelete={handleDeleteMessage}></CardDeletePopup>
           )}
           <Navbar />
-          {messages.length > 0 && (
+          {messages?.length > 0 ? (
             <>
               <StyledHeader>My messages</StyledHeader>
               <MessageList>
@@ -64,6 +64,8 @@ const UserMessagesPage: FunctionComponent = () => {
                 }, [])}
               </MessageList>
             </>
+          ) : (
+            <StyledHeader>You have no messages yet.</StyledHeader>
           )}
         </StyledPage>
       )}

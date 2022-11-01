@@ -47,7 +47,7 @@ const UserSystems: FunctionComponent = () => {
       {currentUser.isLoggedIn && (
         <StyledPage>
           <Navbar />
-          {systems.length > 0 && (
+          {systems?.length > 0 ? (
             <>
               <StyledHeader>System settings</StyledHeader>
               <StyledUl>
@@ -55,26 +55,28 @@ const UserSystems: FunctionComponent = () => {
                   <SystemCard key={system._id} system={system} onSelectSystem={setSelectSystem} />
                 ))}
               </StyledUl>
-            </>
-          )}
-          <StyledDivider />
-          {selectedSystem && (
-            <>
-              <SystemCardHeader>Selected system details:</SystemCardHeader>
-              <SystemDetailsWrapper>
-                <SystemDetails>System name: {selectedSystem.name}</SystemDetails>
-                <SystemDetails>System owner: {selectedSystem.ownerName}</SystemDetails>
-                <SystemDetails>{`System access: ${selectedSystem.isPublic ? 'Public' : 'Private'}`}</SystemDetails>
-                <SystemDetails>Collaborators: {selectedSystem.users.length}</SystemDetails>
-              </SystemDetailsWrapper>
               <StyledDivider />
-              <StyledHeader>Edit system - {selectedSystem.name}</StyledHeader>
-              <SystemEditForm system={selectedSystem} onRename={handleRename} />
-              <OpaqueDivider />
-              <SystemSetAccessForm system={selectedSystem} onSetAccess={handleSetAccess} />
-              <OpaqueDivider />
-              <SystemCreateForm onSystemCreated={handleCreateSystem} />
+              {selectedSystem && (
+                <>
+                  <SystemCardHeader>Selected system details:</SystemCardHeader>
+                  <SystemDetailsWrapper>
+                    <SystemDetails>System name: {selectedSystem.name}</SystemDetails>
+                    <SystemDetails>System owner: {selectedSystem.ownerName}</SystemDetails>
+                    <SystemDetails>{`System access: ${selectedSystem.isPublic ? 'Public' : 'Private'}`}</SystemDetails>
+                    <SystemDetails>Collaborators: {selectedSystem.users.length}</SystemDetails>
+                  </SystemDetailsWrapper>
+                  <StyledDivider />
+                  <StyledHeader>Edit system - {selectedSystem.name}</StyledHeader>
+                  <SystemEditForm system={selectedSystem} onRename={handleRename} />
+                  <OpaqueDivider />
+                  <SystemSetAccessForm system={selectedSystem} onSetAccess={handleSetAccess} />
+                  <OpaqueDivider />
+                  <SystemCreateForm onSystemCreated={handleCreateSystem} />
+                </>
+              )}
             </>
+          ) : (
+            <StyledHeader>You have no systems yet.</StyledHeader>
           )}
         </StyledPage>
       )}
