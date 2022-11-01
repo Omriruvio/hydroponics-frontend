@@ -36,12 +36,13 @@ export default function Home(props) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const res = await fetch(`${BASE_URL}/active-user-count`);
   const activeUserCount = await res.json();
   return {
     props: {
       activeUserCount,
     },
+    revalidate: 60,
   };
 }
