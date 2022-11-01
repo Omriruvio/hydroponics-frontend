@@ -1,11 +1,11 @@
 import { Typography } from '@mui/material';
 import { Chip, Stack } from '@mui/material';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { BASE_URL, DEFAULT_METRICS } from '../config';
 import { usePopups } from '../hooks/usePopups';
 import { UserMessage } from '../utils/parseCropData';
 import BasicGrid from './BasicGrid';
+import ImageWithSkeleton from './ImageWithSkeleton';
 
 interface Metrics {
   ec: number | boolean;
@@ -74,7 +74,7 @@ const GlobalSummary: React.FC<{ activeUserCount: { activeUsers: number } }> = ({
         data={photoMessages.reduce((acc, photo) => {
           if (!photo.imageUrl) return acc;
           acc.push(
-            <Image
+            <ImageWithSkeleton
               key={photo._id}
               layout='responsive'
               objectFit='cover'
