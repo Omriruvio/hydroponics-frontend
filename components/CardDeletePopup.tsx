@@ -1,7 +1,7 @@
 import { usePopups } from '../hooks/usePopups';
 import { FunctionComponent, useEffect } from 'react';
 import { UserMessage } from '../utils/parseCropData';
-import { StyledHeader, SubmitError } from '../styles/globalstyles';
+import { StyledSubHeader, SubmitError } from '../styles/globalstyles';
 import { useInputsAndValidation } from '../hooks/useInputsAndValidation';
 import MessageCard from './MessageCard';
 import { sendDeleteMessage } from '../utils/cropData';
@@ -52,7 +52,7 @@ const CardDeletePopup: FunctionComponent<CardDeletePopupProps> = ({ message, han
         <button onClick={() => popups.handleClose('cardDeletePopup')} className='close'>
           &times;
         </button>
-        <StyledHeader>Delete this card?</StyledHeader>
+        <StyledSubHeader>Delete this message data?</StyledSubHeader>
         <h2>Card to be deleted:</h2>
         <MessageCard message={message} preview={true} />
         <form onSubmit={handleSubmit} className='form_type_onboarding'>

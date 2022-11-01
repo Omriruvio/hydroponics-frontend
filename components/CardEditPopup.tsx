@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { usePopups } from '../hooks/usePopups';
 import { FunctionComponent, useEffect } from 'react';
 import { UserMessage } from '../utils/parseCropData';
-import { FieldError, Input, StyledHeader, StyledLabel, SubmitError } from '../styles/globalstyles';
+import { FieldError, Input, StyledLabel, StyledSubHeader, SubmitError } from '../styles/globalstyles';
 import { useInputsAndValidation } from '../hooks/useInputsAndValidation';
 import MessageCard from './MessageCard';
 import { sendUpdatedMessage } from '../utils/cropData';
@@ -63,7 +63,7 @@ const CardEditPopup: FunctionComponent<CardEditPopupProps> = ({ message, handleU
         <button onClick={() => popups.handleClose('cardEditPopup')} className='close'>
           &times;
         </button>
-        <StyledHeader>Edit message data</StyledHeader>
+        <StyledSubHeader>Edit message data</StyledSubHeader>
         <h2>Original message data:</h2>
         <MessageCard message={message} preview={true} />
         <h2>Edit message data:</h2>
