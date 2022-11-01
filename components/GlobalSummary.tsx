@@ -2,19 +2,22 @@ import { Typography } from '@mui/material';
 import { Chip, Stack } from '@mui/material';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { BASE_URL } from '../config';
+import { BASE_URL, DEFAULT_METRICS } from '../config';
 import { usePopups } from '../hooks/usePopups';
 import { UserMessage } from '../utils/parseCropData';
 import BasicGrid from './BasicGrid';
 
 interface Metrics {
-  [key: string]: number | boolean;
+  ec: number | boolean;
+  temperature: number | boolean;
+  ph: number | boolean;
+  humidity?: number | boolean;
 }
 
 // general total active growers, latest photos, average current parameters
 const GlobalSummary: React.FC<{ activeUserCount: { activeUsers: number } }> = ({ activeUserCount }) => {
   const [photoMessages, setPhotoMessages] = useState<UserMessage[]>([]);
-  const [averageMetrics, setAverageMetrics] = useState<Metrics>({});
+  const [averageMetrics, setAverageMetrics] = useState<Metrics>(DEFAULT_METRICS);
   const popups = usePopups();
   useEffect(() => {
     const getLatestPhotos = async () => {
@@ -33,7 +36,13 @@ const GlobalSummary: React.FC<{ activeUserCount: { activeUsers: number } }> = ({
       // /average-metrics
       const res = await fetch(`${BASE_URL}/average-metrics`);
       const metrics = await res.json();
-      setAverageMetrics(metrics);
+      // TODO: correct server side null data
+      setAverageMetrics({
+        ec: metrics.ec || DEFAULT_METRICS.ec,
+        temperature: metrics.temperature || DEFAULT_METRICS.temperature,
+        ph: metrics.ph || DEFAULT_METRICS.ph,
+        humidity: metrics.humidity || DEFAULT_METRICS.humidity,
+      });
     };
     getAverageMetrics();
   }, []);

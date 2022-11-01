@@ -23,3 +23,10 @@ export const RANGE_STEP_SIZE = 30;
 export const RANGE_PICKER_DEBOUNCE_DELAY_MS = 500;
 // default chart margins
 export const DEFAULT_CHART_MARGINS = { top: 5, left: -15, right: 10, bottom: 5 };
+// default average metric values
+export const DEFAULT_METRICS = {
+  ec: 2500,
+  temperature: 29,
+  ph: 6.5,
+  humidity: 50,
+};
