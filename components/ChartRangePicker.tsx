@@ -1,16 +1,18 @@
-import { FunctionComponent } from 'react';
+import { Slider } from '@mui/material';
+import { FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
 import { MAX_CHART_DAYS, MIN_CHART_DAYS, RANGE_STEP_SIZE } from '../config';
 
 interface PickerProps {
   chartRange: number;
-  handleChartRangeChange: Function;
+  onChartRangeChange: Function;
 }
 
-const RangePicker = styled.input`
+const RangePicker = styled(Slider)`
   display: block;
   margin: auto;
-  min-width: 300px;
+  /* min-width: 300px; */
+  max-width: 50%;
 
   @media (max-width: 450px) {
     min-width: 0;
@@ -19,19 +21,15 @@ const RangePicker = styled.input`
   }
 `;
 
-const ChartRangePicker: FunctionComponent<PickerProps> = ({ chartRange, handleChartRangeChange }) => {
-  const handleChange = (e: any) => handleChartRangeChange(e);
+const ChartRangePicker: FunctionComponent<PickerProps> = ({ chartRange, onChartRangeChange }) => {
+  const [range, setRange] = useState(chartRange);
 
-  return (
-    <RangePicker
-      type={'range'}
-      min={MIN_CHART_DAYS}
-      max={MAX_CHART_DAYS}
-      step={RANGE_STEP_SIZE}
-      value={chartRange}
-      onChange={handleChange}
-    ></RangePicker>
-  );
+  const handleChange = (e: any) => {
+    setRange(e.target.value);
+    onChartRangeChange(e);
+  };
+
+  return <RangePicker min={MIN_CHART_DAYS} max={MAX_CHART_DAYS} step={RANGE_STEP_SIZE} value={range} onChange={handleChange} />;
 };
 
 export default ChartRangePicker;

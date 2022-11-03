@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p 3001",
-    "lint": "next lint"
+    "lint": "next lint",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -15,6 +17,7 @@
     "@types/recharts": "^1.8.23",
     "chart.js": "^3.8.0",
     "lodash.debounce": "^4.0.8",
+    "mobx": "^6.6.2",
     "mobx-react-lite": "^3.4.0",
     "moment": "^2.29.4",
     "next": "12.1.6",
@@ -23,15 +26,28 @@
     "react-dom": "18.2.0",
     "recharts": "2.1.12",
     "sharp": "^0.30.7",
+    "storybook-addon-next": "^1.6.9",
     "styled-components": "^5.3.5"
   },
   "devDependencies": {
+    "@babel/core": "^7.19.6",
     "@faker-js/faker": "^7.3.0",
+    "@storybook/addon-actions": "^6.5.13",
+    "@storybook/addon-essentials": "^6.5.13",
+    "@storybook/addon-interactions": "^6.5.13",
+    "@storybook/addon-links": "^6.5.13",
+    "@storybook/builder-webpack5": "^6.5.13",
+    "@storybook/manager-webpack5": "^6.5.13",
+    "@storybook/react": "^6.5.13",
+    "@storybook/testing-library": "^0.0.13",
     "@types/lodash.debounce": "^4.0.7",
     "@types/node": "^18.0.0",
     "@types/styled-components": "^5.1.25",
+    "babel-loader": "^8.3.0",
     "babel-plugin-styled-components": "^2.0.7",
-    "eslint": "8.18.0",
-    "eslint-config-next": "12.1.6"
+    "eslint": "^8.26.0",
+    "eslint-config-next": "12.1.6",
+    "eslint-plugin-storybook": "^0.6.7",
+    "typescript": "^4.8.4"
   }
 }

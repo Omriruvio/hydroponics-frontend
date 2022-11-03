@@ -29,7 +29,7 @@ const CropDataDashboard: FunctionComponent<ICropDataDashboardProps> = ({ current
   return (
     <>
       <StyledHeader>{dashboardHeader}</StyledHeader>
-      <ChartRangePicker handleChartRangeChange={handleRangeChange} chartRange={chartRange}></ChartRangePicker>
+      <ChartRangePicker onChartRangeChange={handleRangeChange} chartRange={chartRange}></ChartRangePicker>
       <DisplayDays>Displaying last {chartRange} days of data:</DisplayDays>
       {/* Combined chart currently commented out */}
       {/* <UserChart chartData={mainChartData} daysDisplayed={chartRange}></UserChart> */}
