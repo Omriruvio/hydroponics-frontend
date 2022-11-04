@@ -1,5 +1,5 @@
 import { Slider } from '@mui/material';
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent } from 'react';
 import styled from 'styled-components';
 import { MAX_CHART_DAYS, MIN_CHART_DAYS, RANGE_STEP_SIZE } from '../config';
 
@@ -62,15 +62,19 @@ const PrettoSlider = styled(Slider)({
 });
 
 const ChartRangePicker: FunctionComponent<PickerProps> = ({ chartRange, onChartRangeChange }) => {
-  const [range, setRange] = useState(chartRange);
-
   const handleChange = (e: any) => {
-    setRange(e.target.value);
     onChartRangeChange(e);
   };
 
   return (
-    <PrettoSlider valueLabelDisplay='auto' min={MIN_CHART_DAYS} max={MAX_CHART_DAYS} step={RANGE_STEP_SIZE} value={range} onChange={handleChange} />
+    <PrettoSlider
+      valueLabelDisplay='auto'
+      min={MIN_CHART_DAYS}
+      max={MAX_CHART_DAYS}
+      step={RANGE_STEP_SIZE}
+      value={chartRange}
+      onChange={handleChange}
+    />
   );
 };
 

@@ -15,17 +15,25 @@ export default {
   title: 'Main/ChartRangePicker',
   component: ChartRangePicker,
   argTypes: {
-    chartRange: { control: 'number' },
+    chartRange: {
+      control: {
+        type: 'range',
+        min: 30,
+        max: 360,
+        step: 30,
+      },
+    },
+    onChartRangeChange: { action: 'changed' },
   },
 } as ComponentMeta<typeof ChartRangePicker>;
 
 //👇 We create a “template” of how args map to rendering
-const Template: ComponentStory<typeof ChartRangePicker> = (args) => <ChartRangePicker {...args} />;
-
+const Template: ComponentStory<typeof ChartRangePicker> = (args) => {
+  return <ChartRangePicker {...args} />;
+};
 export const Original = Template.bind({});
 
 Original.args = {
   /* 👇 The args you need here will depend on your component */
-  chartRange: 30,
-  // onChartRangeChange: () => {},
+  chartRange: 60,
 };
