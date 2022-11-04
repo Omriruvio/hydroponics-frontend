@@ -5,7 +5,10 @@ import { MAX_CHART_DAYS, MIN_CHART_DAYS, RANGE_STEP_SIZE } from '../config';
 
 interface PickerProps {
   chartRange: number;
-  onChartRangeChange: Function;
+  onChange: Function;
+  min?: number;
+  max?: number;
+  step?: number;
 }
 
 const PrettoSlider = styled(Slider)({
@@ -61,21 +64,19 @@ const PrettoSlider = styled(Slider)({
   },
 });
 
-const ChartRangePicker: FunctionComponent<PickerProps> = ({ chartRange, onChartRangeChange }) => {
+const ChartRangePicker: FunctionComponent<PickerProps> = ({
+  chartRange,
+  onChange,
+  min = MIN_CHART_DAYS,
+  max = MAX_CHART_DAYS,
+  step = RANGE_STEP_SIZE,
+  ...props
+}) => {
   const handleChange = (e: any) => {
-    onChartRangeChange(e);
+    onChange(e);
   };
 
-  return (
-    <PrettoSlider
-      valueLabelDisplay='auto'
-      min={MIN_CHART_DAYS}
-      max={MAX_CHART_DAYS}
-      step={RANGE_STEP_SIZE}
-      value={chartRange}
-      onChange={handleChange}
-    />
-  );
+  return <PrettoSlider valueLabelDisplay='auto' min={min} max={max} step={step} value={chartRange} onChange={handleChange} {...props} />;
 };
 
 export default ChartRangePicker;

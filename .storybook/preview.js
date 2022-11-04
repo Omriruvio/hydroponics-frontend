@@ -1,5 +1,6 @@
 // add styled components
 import { GlobalStyles } from '../styles/globalstyles';
+import '@storybook/addon-console';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },

@@ -3,6 +3,7 @@
 import React from 'react';
 
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { useArgs } from '@storybook/client-api';
 
 import ChartRangePicker from '../components/ChartRangePicker';
 
@@ -23,17 +24,41 @@ export default {
         step: 30,
       },
     },
-    onChartRangeChange: { action: 'changed' },
+    onChange: {
+      action: 'changed',
+      control: {
+        type: 'function',
+      },
+    },
   },
 } as ComponentMeta<typeof ChartRangePicker>;
 
 //👇 We create a “template” of how args map to rendering
-const Template: ComponentStory<typeof ChartRangePicker> = (args) => {
-  return <ChartRangePicker {...args} />;
-};
-export const Original = Template.bind({});
+const Template: ComponentStory<any> = (args) => {
+  const [, updateArgs] = useArgs();
 
-Original.args = {
-  /* 👇 The args you need here will depend on your component */
-  chartRange: 60,
+  return (
+    <ChartRangePicker
+      {...args}
+      onChange={(e: any) => {
+        updateArgs({ chartRange: e.target.value });
+      }}
+    />
+  );
 };
+export const Initial = Template.bind({});
+
+Initial.args = {
+  chartRange: 30,
+};
+
+export const WithRange = Template.bind({});
+WithRange.args = {
+  chartRange: 90,
+};
+
+export const WithMaxRange = Template.bind({});
+WithMaxRange.args = {
+  chartRange: 360,
+};
+
