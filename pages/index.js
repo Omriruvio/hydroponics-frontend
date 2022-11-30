@@ -35,11 +35,16 @@ export default function Home(props) {
 }
 
 export async function getStaticProps() {
-  const res = await fetch(`${BASE_URL}/active-user-count`);
-  const activeUserCount = await res.json();
+  let activeUserCount;
+  try {
+    const res = await fetch(`${BASE_URL}/active-user-count`);
+    activeUserCount = await res.json();
+  } catch (err) {
+    console.log(err);
+  }
   return {
     props: {
-      activeUserCount,
+      activeUserCount: activeUserCount || 0,
     },
     revalidate: 60,
   };
